@@ -1,0 +1,34 @@
+* {
+    margin: 0;
+    padding: 0;
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    /* overflow-x: hidden */
+}
+
+body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    /* overflow-x: hidden */
+}
+
+ul li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+button,
+input,
+textarea {
+    outline: none;
+}

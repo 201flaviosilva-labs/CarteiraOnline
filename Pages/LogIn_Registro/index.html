@@ -1,14 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../style/reset.css">
+    <link rel="stylesheet" href="./style.min.css">
     <title>Bem Vindo</title>
 </head>
 
 <body>
-    <h1>Bem Vindo</h1>
+    <header>
+        <h1>Bem Vindo 🖖</h1>
+    </header>
+
+    <main>
+        <section id="LogIn">
+            <form>
+                <h2>Já nos conheçemos?</h2>
+                <input type="text" placeholder="Nome de Usuário">
+                <input type="password" placeholder="Palavra-Passe">
+                <div class="ConjuntoBtns">
+                    <button type="submit">Inscrever</button>
+                    <button type="button">Esqueci a Palavra Passe</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="Registro">
+            <form>
+                <h2>Novo?</h2>
+
+                <div class="Campo">
+                    <h3>Nome:</h3>
+                    <div>
+                        <input type="text" placeholder="Nome">
+                        <input type="text" placeholder="Nome de Usuário" id="NomUser">
+                    </div>
+                </div>
+
+                <div class="Campo">
+                    <h3>Palavra-Passe:</h3>
+                    <div>
+                        <input type="password" placeholder="Palavra-Passe">
+                        <input type="password" placeholder="Repete Palavra-Passe">
+                    </div>
+                </div>
+
+                <div class="Campo">
+                    <h3>Palavra-Passe Recuperação:</h3>
+                    <div>
+                        <input type="password" placeholder="Palavra-Passe Recuperação">
+                        <input type="password" placeholder="Repete Palavra-Passe Recuperação">
+                    </div>
+                </div>
+
+                <button type="submit">Criar Conta</button>
+            </form>
+        </section>
+    </main>
 
 </body>
 
