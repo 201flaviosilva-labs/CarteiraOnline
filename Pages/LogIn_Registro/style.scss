@@ -23,21 +23,37 @@ body {
                 justify-content: space-evenly;
                 border: 2px solid red;
                 border-radius: 6px;
+                background-color: darkkhaki;
+                h3 {
+                    width: 100%;
+                    margin-bottom: 4px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    background-color: hotpink;
+                    button {
+                        width: 20px;
+                        height: 20px;
+                        border: 1px solid royalblue;
+                        border-radius: 50%;
+                    }
+                }
                 input,
-                button {
+                button.BtnControlo {
                     width: 80%;
                     padding: 4px 10px;
                     border: 2px solid orange;
                     border-radius: 8px;
                     font-size: 20px;
                     font-weight: 700;
-                    cursor: pointer;
                 }
                 button {
+                    cursor: pointer;
                     &:hover {
                         background: lightgrey;
                         &:active {
-                            background: seashell;
+                            color: white;
+                            background: black;
                         }
                     }
                 }
