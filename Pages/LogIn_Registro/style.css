@@ -1,102 +1,47 @@
-body header {
-  flex-grow: 1;
-  background: red;
+/* Testes */
+
+header {
+    background-color: red;
 }
 
-body main {
-  flex-grow: 10;
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  background: green;
+section:nth-child(1) {
+    background-color: aqua;
 }
 
-body main section {
-  width: 45%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+section:nth-child(2) {
+    background-color: violet;
 }
 
-body main section form {
-  width: 100%;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  border: 2px solid red;
-  border-radius: 6px;
-  background-color: darkkhaki;
+
+/* Aprovado */
+
+main {
+    flex-grow: 1;
 }
 
-body main section form h3 {
-  width: 100%;
-  margin-bottom: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: hotpink;
+form {
+    width: 500px;
 }
 
-body main section form h3 button {
-  width: 20px;
-  height: 20px;
-  border: 1px solid royalblue;
-  border-radius: 50%;
+h3 {
+    margin-top: 6px;
+    margin-bottom: 2px;
 }
 
-body main section form input,
-body main section form button.BtnControlo {
-  width: 80%;
-  padding: 4px 10px;
-  border: 2px solid orange;
-  border-radius: 8px;
-  font-size: 20px;
-  font-weight: 700;
+input {
+    border: 1px solid royalblue;
+    border-radius: 4px;
+    padding: 6px 10px;
+    box-shadow: 2px 2px 2px #dadada;
+    transition: .5s;
 }
 
-body main section form button {
-  cursor: pointer;
+input:focus {
+    transform: scale(1.15);
+    box-shadow: 4px 4px 4px grey;
 }
 
-body main section form button:hover {
-  background: lightgrey;
-}
-
-body main section form button:hover:active {
-  color: white;
-  background: black;
-}
-
-body main section form div.ConjuntoBtns {
-  width: 80%;
-  display: flex;
-}
-
-body main section form div.Campo {
-  background-color: lightblue;
-  width: 80%;
-}
-
-body main section form div.Campo div {
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-}
-
-body main section form div.Campo div input {
-  width: 100%;
-}
-
-body main section form div.Campo div input:nth-child(2) {
-  margin-left: 6px;
-}
-
-body main section#LogIn {
-  background-color: royalblue;
-}
-
-body main section#Registro {
-  background-color: lightcoral;
+button {
+    margin-top: 6px;
+    outline: none;
 }
