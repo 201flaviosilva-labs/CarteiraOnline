@@ -1,10 +1,26 @@
+<?php
+require "../../Data/Conexao.php";
+$UserName = $_SESSION["SessaoUserId"];
+$sql = "SELECT Nome, Balanco, Valor FROM Contas INNER JOIN Useres ON Contas.User_Id = Useres.User_Id WHERE Useres.User_Id = $UserName";
+$resultContas = $conn->query($sql);
+
+$resultHistorico = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="pt">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS -->
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- DataTables -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="../../style/reset.css">
     <link rel="stylesheet" href="./style.css?v=<?php echo time(); ?>">
     <title>Dashboard</title>
@@ -16,51 +32,87 @@
     </header>
 
     <main>
-        <div class="Container">
+        <h2>Criar Conta</h2>
+        <form class="d-flex flex-column justify-content-around shadow-lg p-3 mb-5 bg-white rounded" action="../../Data/Contas/Adicionar.php" method="get">
+            <input type="text" placeholder="Nome da Conta" pattern=".{1,30}" name="Nome" required>
+            <input type="number" placeholder="Balanço Atual" name="Balanco">
+            <input type="number" placeholder="Valor" name="Valor">
+            <input type="number" placeholder="Mensalidade" title="Objetivo mensal" name="Mensalidade">
+            <input type="date" placeholder="Data Final" name="DataFinal">
+            <textarea placeholder="Descrição" pattern=".{0,500}" name="Descricao">Descrição</textarea>
+            <button type="submit" class="btn btn-primary">Criar Conta</button>
+        </form>
+
+        <ul class="shadow-lg p-3 mb-5 bg-white rounded">
             <h2>Contas</h2>
-            <div class="Contas">
-                <article>
-                    <h3>(Nome)</h3>
-                    <p>(Saldo)</p>
-                </article>
-                <article>
-                    <h3>(Nome)</h3>
-                    <p>(Saldo)</p>
-                </article>
-                <article>
-                    <h3>(Nome)</h3>
-                    <p>(Saldo)</p>
-                </article>
-                <article>
-                    <h3>(Nome)</h3>
-                    <p>(Saldo)</p>
-                </article>
-            </div>
-            <h2>Atividade</h2>
-            <div class="Atividade">
-                <ul>
+            <?php
+            if ($resultContas->num_rows > 0) { ?>
+
+                <?php while ($row = $resultContas->fetch_assoc()) { ?>
                     <li>
-                        <h3>Conta</h3>
-                        <p>(descrição)</p>
-                        <h4>(valor)</h4>
-                        <p>Data</p>
+                        <h4> <?php echo $row["Nome"]; ?></h4>
+                        <p> <?php echo $row['Balanco'] . "/" . $row['Valor']; ?></p>
                     </li>
-                    <li>
-                        <h3>Conta</h3>
-                        <p>(descrição)</p>
-                        <h4>(valor)</h4>
-                        <p>Data</p>
-                    </li>
-                    <li>
-                        <h3>Conta</h3>
-                        <p>(descrição)</p>
-                        <h4>(valor)</h4>
-                        <p>Data</p>
-                    </li>
-                </ul>
-            </div>
+            <?php }
+            } else {
+                echo "<li>Não tens nenhuma conta registrada!</li>";
+            }
+            ?>
+        </ul>
+
+        <hr>
+
+        <div class="container table-responsive">
+            <h2>Histórico</h2>
+            <?php
+            if ($resultHistorico->num_rows > 0) { ?>
+
+                <table class="table table-bordered table-striped table-hover table-condensed" cellspacing="0" width="100%" id="TabelaContas">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Contas</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Eleminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <?php while ($row = $resultHistorico->fetch_assoc()) { ?>
+                            <tr>
+                                <!-- <td> <?php echo $row["Nome"]; ?></td>
+                                <td> <?php echo $row["Balanco"]; ?></td>
+                                <td> <?php echo $row["Valor"]; ?></td>
+                                <td> <?php echo $row["Mensalidade"]; ?></td>
+                                <td> <?php echo $row["DataFinal"]; ?> </td>
+                                <td class="TabDescricao"> <?php echo $row["Descricao"]; ?></td>
+                                <td>
+                                    <a href="./recebido.php?Musicas_Id=<?php echo $row['Musicas_Id']; ?>" class="btn btn-success">Adicionar</a>
+                                    <a href="./recebido.php?Musicas_Id=<?php echo $row['Musicas_Id']; ?>" class="btn btn-info">Alterar</a>
+                                    <a href="../Data/Musicas/Apagar.php?Musicas_Id=<?php echo $row['Musicas_Id']; ?>" class="btn btn-danger">Apagar</a>
+                                </td> -->
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            <?php } else {
+                echo "<p>Não tens nenhum histórico de contas registrada!</p>";
+            }
+            ?>
         </div>
     </main>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.13/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#TabelaContas').DataTable();
+        });
+    </script>
 
 </body>
 

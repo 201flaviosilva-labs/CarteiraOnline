@@ -1,6 +1,5 @@
 <?PHP
 require "../Conexao.php";
-require "../Sessao.php";
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -16,6 +15,7 @@ require "../Sessao.php";
 </body>
 
 </html>
+<h1>A Resolver o pedido de Log In</h1>
 
 <?php
 $UserName = isset($_POST["UserName"]) ? $_POST["UserName"] : "Bug";

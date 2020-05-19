@@ -1,6 +1,6 @@
 <?PHP
 require "../Conexao.php";
-require "../Sessao.php";
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -16,7 +16,7 @@ require "../Sessao.php";
     // $UserName =  "user" . rand();
     $UserName =  isset($_POST["UserName"]) ? $_POST["UserName"] : "nop";
     $PalavraPasse = isset($_POST["PalavraPasse"]) ? $_POST["PalavraPasse"] : "123";
-    $CodigoRecuperacao = rand();
+    $CodigoRecuperacao = randomPassword();
 
     // echo "User: " . $UserName;
     // echo "<br/>";
@@ -47,6 +47,17 @@ require "../Sessao.php";
         echo "Opá já existe um mens com esse nome";
     }
 
+    function randomPassword()
+    {
+        $caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&.,-_><";
+        $palavra = array();
+        $tamanhoCaracteres = strlen($caracteres) - 1;
+        for ($i = 0; $i < 10; $i++) {
+            $n = rand(0, $tamanhoCaracteres);
+            $palavra[] = $caracteres[$n];
+        }
+        return implode($palavra);
+    }
     ?>
 </body>
 

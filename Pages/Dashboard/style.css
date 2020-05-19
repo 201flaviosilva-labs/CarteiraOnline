@@ -1,38 +1,106 @@
 body header {
-  flex-grow: 2;
-  background: red;
+    flex-grow: 2;
+    background: red;
 }
 
 body main {
-  flex-grow: 10;
-  width: 100%;
-  background-color: rebeccapurple;
-  display: flex;
-  justify-content: center;
+    flex-grow: 10;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-body main div.Container {
-  background-color: rosybrown;
-  width: 33%;
+h2 {
+    width: 100%;
+    text-align: center;
 }
 
-body main div.Container div.Contas {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  grid-gap: 4px;
-  background: green;
+form {
+    width: 33%;
+    height: 400px;
+    justify-content: space-evenly;
 }
 
-body main div.Container div.Contas article {
-  border: 1px solid black;
-  border-radius: 6px;
+h3 {
+    margin-top: 6px;
+    margin-bottom: 2px;
 }
 
-body main div.Container div.Atividade ul li {
-  background-color: white;
+input,
+textarea {
+    border: 1px solid royalblue;
+    border-radius: 4px;
+    padding: 6px 10px;
+    box-shadow: 2px 2px 2px #dadada;
+    transition: .5s;
 }
 
-body main div.Container div.Atividade ul li:nth-child(even) {
-  background-color: gray;
+textarea {
+    height: 80px;
+    min-height: 50px;
+    max-height: 100px;
+    padding-top: 10px;
+    resize: vertical;
+    overflow: auto;
+    transition: .2s;
+}
+
+input:focus,
+textarea:focus {
+    transform: scale(1.15);
+    box-shadow: 4px 4px 4px grey;
+}
+
+button {
+    margin-top: 6px;
+    outline: none;
+}
+
+ul {
+    width: 33%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* grid-template-rows: repeat(3, 1fr); */
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+}
+
+ul h2 {
+    grid-area: 1 / 1 / 2 / 4;
+    border-bottom: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+ul li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px rgb(0, 0, 0, .75);
+    transition: .3s;
+    cursor: pointer;
+}
+
+ul li:hover {
+    box-shadow: 10px 10px 8px rgb(0, 0, 0, .75);
+    transform: scale(1.1);
+}
+
+ul li:active {
+    box-shadow: 5px 5px 4px rgb(0, 0, 0, .75);
+    transform: scale(1.05);
+}
+
+ul li h4 {
+    width: 90%;
+    text-align: center;
+    border-bottom: 1px solid #b3b3b3;
+}
+
+body main table tbody tr td.TabDescricao {
+    width: 350px;
+    word-break: break-all;
 }
