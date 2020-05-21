@@ -54,7 +54,6 @@ textarea:focus {
 
 button {
   margin-top: 6px;
-  outline: none;
 }
 
 ul {
@@ -72,7 +71,7 @@ ul h2 {
   border-radius: 4px;
 }
 
-ul li {
+ul li a {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -81,15 +80,14 @@ ul li {
   border-radius: 10px;
   box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.75);
   transition: 0.3s;
-  cursor: pointer;
 }
 
-ul li:hover {
+ul li a:hover {
   box-shadow: 10px 10px 8px rgb(0, 0, 0, 0.75);
   transform: scale(1.1);
 }
 
-ul li:active {
+ul li a:active {
   box-shadow: 5px 5px 4px rgb(0, 0, 0, 0.75);
   transform: scale(1.05);
 }

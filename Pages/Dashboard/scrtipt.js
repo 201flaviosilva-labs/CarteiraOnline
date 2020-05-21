@@ -3,10 +3,7 @@ $(document).ready(function () {
 });
 
 const d = new Date();
-const data = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
-  2,
-  "0"
-)}-${d.getDate()}`;
+const data = `${String(new Date().toISOString().slice(0, 10))}`;
 console.log(data);
 
 $("#DataFinal").value = data;

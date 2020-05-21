@@ -1,11 +1,13 @@
 <?php
-require "../../Data/Conexao.php";
-
+require "../../../Data/Conexao.php";
+$Conta_Id = isset($_GET["Conta_Id"]) ? $_GET["Conta_Id"] : "1";
 $UserName = $_SESSION["SessaoUserId"];
-$sql = "SELECT Conta_Id, Nome, Balanco, Valor FROM Contas INNER JOIN Useres ON Contas.User_Id = Useres.User_Id WHERE Useres.User_Id = $UserName";
-$resultContas = $conn->query($sql);
 
-$resultHistorico = $conn->query($sql);
+$sql = "SELECT * FROM Contas INNER JOIN Useres ON Contas.User_Id = Useres.User_Id WHERE Useres.User_Id = $UserName AND $Conta_Id = Contas.Conta_Id";
+$resultContas = $conn->query($sql);
+$numLinhasContas = $resultContas->num_rows;
+$linha = $resultContas->fetch_assoc();
+
 ?>
 
 <!DOCTYPE html>
@@ -20,58 +22,48 @@ $resultHistorico = $conn->query($sql);
     <!-- DataTables -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="../../style/reset.css">
+    <link rel="stylesheet" href="../../../style/reset.css">
     <link rel="stylesheet" href="./style.css?v=<?php echo time(); ?>">
-    <title>Dashboard</title>
+    <title>Carteira Online</title>
 </head>
 
 <body>
     <header>
         <h1>Dashboard</h1>
     </header>
-
     <main>
-        <h2>Criar Conta</h2>
-        <form class="d-flex flex-column justify-content-around shadow-lg p-3 mb-5 bg-white rounded" action="../../Data/Contas/Criar.php" method="get">
-            <input type="text" placeholder="Nome da Conta" pattern=".{1,30}" name="Nome" required>
-            <input type="number" placeholder="Balanço Atual" name="Balanco">
-            <input type="number" placeholder="Valor" name="Valor">
-            <input type="number" placeholder="Mensalidade" title="Objetivo mensal" name="Mensalidade">
-            <input type="date" placeholder="Data Final" name="DataFinal" id="DataFinal">
-            <textarea placeholder="Descrição" pattern=".{0,500}" name="Descricao">Descrição</textarea>
-            <button type="submit" class="btn btn-primary">Criar Conta</button>
-        </form>
+        <?php if ($numLinhasContas > 0) { ?>
+            <h2>
+                <a href="../../../Data/Contas/Historico/Adicionar.php">
+                    <button class="btn btn-success">
+                        <i>
+                            <img src="../../../Assets/Icons/plus.svg" alt="Adicionar">
+                        </i>
+                    </button>
+                </a>
+                <span>Editar</span>
+                <a href="../../../Data/Contas/Eliminar.php?Conta_Id=<?php echo $Conta_Id; ?>"> <button class="btn btn-danger">
+                        <i>
+                            <img src="../../../Assets/Icons/trash.svg" alt="Eliminar">
+                        </i>
+                    </button>
+                </a>
+            </h2>
+            <form class="shadow-lg p-3 mb-5 bg-white rounded" action="../../../Data/Contas/Editar.php" method="get">
+                <input type="text" placeholder="Nome da Conta" pattern=".{1,30}" name="Nome" value="<?php echo $linha["Nome"]; ?>" required>
+                <input type="number" placeholder="Balanço Atual" name="Balanco" value="<?php echo $linha["Balanco"]; ?>">
+                <input type="number" placeholder="Valor" name="Valor" value="<?php echo $linha["Valor"]; ?>">
+                <input type="number" placeholder="Mensalidade" title="Objetivo mensal" name="Mensalidade" value="<?php echo $linha["Mensalidade"]; ?>">
+                <textarea placeholder="Descrição" pattern=".{0,500}" name="Descricao" value="<?php echo $linha["Descricao"]; ?>">Descrição</textarea>
+                <input type="date" placeholder="Data Final" name="DataFinal" id="DataFinal" value="<?php echo $linha["DataFinal"]; ?>">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </form>
 
-        <ul class="shadow-lg p-3 mb-5 bg-white rounded">
-            <h2>Contas</h2>
-            <?php
-            if ($resultContas->num_rows > 0) { ?>
-
-                <?php while ($row = $resultContas->fetch_assoc()) { ?>
-                    <li><a href="./Conta/Ver.php?Conta_Id=<?php echo $row['Conta_Id']; ?>">
-
-                            <h4> <?php echo $row["Nome"]; ?></h4>
-                            <p> <?php echo $row['Balanco'] . "/" . $row['Valor']; ?></p>
-                        </a>
-                    </li>
-            <?php }
-            } else {
-                echo "<li>Não tens nenhuma conta registrada!</li>";
-            }
-            ?>
-        </ul>
-
-        <hr>
-
-        <div class="container table-responsive">
-            <h2>Histórico</h2>
-            <?php
-            if ($resultHistorico->num_rows > 0) { ?>
-
+            <div class="container table-responsive">
+                <h2>Histórico</h2>
                 <table class="table table-bordered table-striped table-hover table-condensed" cellspacing="0" width="100%" id="TabelaContas">
                     <thead class="thead-light">
                         <tr>
-                            <th scope="col">Conta</th>
                             <th scope="col">Nome</th>
                             <th scope="col">Valor</th>
                             <th scope="col">Data</th>
@@ -82,7 +74,6 @@ $resultHistorico = $conn->query($sql);
 
                         <?php while ($row = $resultHistorico->fetch_assoc()) { ?>
                             <tr>
-                                <!-- <td> <?php echo $row["Nome"]; ?></td>
                                 <td class="TabBalanco"> <?php echo $row["Balanco"]; ?></td>
                                 <td lass="TabValor"> <?php echo $row["Valor"]; ?></td>
                                 <td lass="TabMensalidade"> <?php echo $row["Mensalidade"]; ?></td>
@@ -98,11 +89,13 @@ $resultHistorico = $conn->query($sql);
 
                     </tbody>
                 </table>
-            <?php } else {
-                echo "<p>Não tens nenhum histórico de contas registrada!</p>";
-            }
+
+            <?php
+        } else {
+            echo "<h2>Não tens acesso a esta conta!! <i>🚷</i></h2>";
+        }
             ?>
-        </div>
+            </div>
     </main>
 
     <!-- Scripts -->
@@ -110,7 +103,11 @@ $resultHistorico = $conn->query($sql);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.13/js/dataTables.bootstrap4.min.js"></script>
 
-    <script src="./scrtipt.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#TabelaContas").DataTable();
+        });
+    </script>
 </body>
 
 </html>

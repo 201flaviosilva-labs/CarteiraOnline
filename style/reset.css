@@ -1,34 +1,33 @@
 * {
-    margin: 0;
-    padding: 0;
-    color: black;
-    font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  padding: 0;
+  color: black;
+  font-family: "Courier New", Courier, monospace;
 }
 
 html {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    /* overflow-x: hidden */
+  height: 100%;
+  width: 100%;
+  display: flex;
+  /* overflow-x: hidden */
 }
 
 body {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    /* overflow-x: hidden */
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  /* overflow-x: hidden */
 }
 
 ul li {
-    list-style: none;
-}
-
-a {
-    text-decoration: none;
+  list-style: none;
 }
 
 button,
 input,
-textarea {
-    outline: none;
+textarea,
+a {
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
 }
