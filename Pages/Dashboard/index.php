@@ -38,7 +38,7 @@ $resultHistorico = $conn->query($sql);
             <input type="number" placeholder="Balanço Atual" name="Balanco">
             <input type="number" placeholder="Valor" name="Valor">
             <input type="number" placeholder="Mensalidade" title="Objetivo mensal" name="Mensalidade">
-            <input type="date" placeholder="Data Final" name="DataFinal">
+            <input type="date" placeholder="Data Final" name="DataFinal" id="DataFinal">
             <textarea placeholder="Descrição" pattern=".{0,500}" name="Descricao">Descrição</textarea>
             <button type="submit" class="btn btn-primary">Criar Conta</button>
         </form>
@@ -74,7 +74,7 @@ $resultHistorico = $conn->query($sql);
                             <th scope="col">Nome</th>
                             <th scope="col">Valor</th>
                             <th scope="col">Data</th>
-                            <th scope="col">Eleminar</th>
+                            <th scope="col">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,10 +82,10 @@ $resultHistorico = $conn->query($sql);
                         <?php while ($row = $resultHistorico->fetch_assoc()) { ?>
                             <tr>
                                 <!-- <td> <?php echo $row["Nome"]; ?></td>
-                                <td> <?php echo $row["Balanco"]; ?></td>
-                                <td> <?php echo $row["Valor"]; ?></td>
-                                <td> <?php echo $row["Mensalidade"]; ?></td>
-                                <td> <?php echo $row["DataFinal"]; ?> </td>
+                                <td class="TabBalanco"> <?php echo $row["Balanco"]; ?></td>
+                                <td lass="TabValor"> <?php echo $row["Valor"]; ?></td>
+                                <td lass="TabMensalidade"> <?php echo $row["Mensalidade"]; ?></td>
+                                <td lass="TabDataFinal"> <?php echo $row["DataFinal"]; ?> </td>
                                 <td class="TabDescricao"> <?php echo $row["Descricao"]; ?></td>
                                 <td>
                                     <a href="./recebido.php?Musicas_Id=<?php echo $row['Musicas_Id']; ?>" class="btn btn-success">Adicionar</a>
@@ -94,6 +94,7 @@ $resultHistorico = $conn->query($sql);
                                 </td> -->
                             </tr>
                         <?php } ?>
+
                     </tbody>
                 </table>
             <?php } else {
@@ -108,11 +109,7 @@ $resultHistorico = $conn->query($sql);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.13/js/dataTables.bootstrap4.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('#TabelaContas').DataTable();
-        });
-    </script>
+
 
 </body>
 
