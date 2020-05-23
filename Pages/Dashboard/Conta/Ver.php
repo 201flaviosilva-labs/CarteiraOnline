@@ -1,13 +1,30 @@
 <?php
 require "../../../Data/Conexao.php";
 $Conta_Id = isset($_GET["Conta_Id"]) ? $_GET["Conta_Id"] : "1";
-$UserName = $_SESSION["SessaoUserId"];
+$_SESSION["SessaoContaId"] = $Conta_Id;
+$User_Id = $_SESSION["SessaoUserId"];
 
-$sql = "SELECT * FROM Contas INNER JOIN Useres ON Contas.User_Id = Useres.User_Id WHERE Useres.User_Id = $UserName AND $Conta_Id = Contas.Conta_Id";
+$sql = "SELECT Contas.*
+        FROM Contas
+        INNER JOIN Useres
+        ON Contas.User_Id = Useres.User_Id
+        WHERE Useres.User_Id = $User_Id
+        AND $Conta_Id = Contas.Conta_Id";
 $resultContas = $conn->query($sql);
 $numLinhasContas = $resultContas->num_rows;
 $linha = $resultContas->fetch_assoc();
 
+$sql = "SELECT Registros.*
+        FROM Contas
+        INNER JOIN Useres
+        ON Contas.User_Id = Useres.User_Id
+        INNER JOIN Registros
+        ON Contas.Conta_Id = Registros.Conta_Id
+        WHERE Useres.User_Id = $User_Id
+        AND $Conta_Id = Contas.Conta_Id
+        AND Registros.Conta_Id = Contas.Conta_Id";
+
+$resultRegistros = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -34,13 +51,6 @@ $linha = $resultContas->fetch_assoc();
     <main>
         <?php if ($numLinhasContas > 0) { ?>
             <h2>
-                <a href="../../../Data/Contas/Historico/Adicionar.php">
-                    <button class="btn btn-success">
-                        <i>
-                            <img src="../../../Assets/Icons/plus.svg" alt="Adicionar">
-                        </i>
-                    </button>
-                </a>
                 <span>Editar</span>
                 <a href="../../../Data/Contas/Eliminar.php?Conta_Id=<?php echo $Conta_Id; ?>"> <button class="btn btn-danger">
                         <i>
@@ -49,51 +59,62 @@ $linha = $resultContas->fetch_assoc();
                     </button>
                 </a>
             </h2>
-            <form class="shadow-lg p-3 mb-5 bg-white rounded" action="../../../Data/Contas/Editar.php" method="get">
+
+            <form class="formEditarConta shadow-lg p-3 mb-5 bg-white rounded" action="../../../Data/Contas/Editar.php" method="GET">
                 <input type="text" placeholder="Nome da Conta" pattern=".{1,30}" name="Nome" value="<?php echo $linha["Nome"]; ?>" required>
-                <input type="number" placeholder="Balanço Atual" name="Balanco" value="<?php echo $linha["Balanco"]; ?>">
-                <input type="number" placeholder="Valor" name="Valor" value="<?php echo $linha["Valor"]; ?>">
-                <input type="number" placeholder="Mensalidade" title="Objetivo mensal" name="Mensalidade" value="<?php echo $linha["Mensalidade"]; ?>">
-                <textarea placeholder="Descrição" pattern=".{0,500}" name="Descricao" value="<?php echo $linha["Descricao"]; ?>">Descrição</textarea>
-                <input type="date" placeholder="Data Final" name="DataFinal" id="DataFinal" value="<?php echo $linha["DataFinal"]; ?>">
+                <input type="number" min="0" placeholder="Valor" name="Valor" value="<?php echo $linha["Valor"]; ?>">
+                <input type="number" min="0" placeholder="Mensalidade" title="Objetivo mensal" name="Mensalidade" value="<?php echo $linha["Mensalidade"]; ?>">
+                <input type="date" name="DataFinal" id="DataFinal" value="<?php echo $linha["DataFinal"]; ?>">
+                <textarea placeholder="Descrição" pattern=".{0,500}" name="Descricao" value="<?php echo $linha["Descricao"]; ?>"><?php echo $linha["Descricao"]; ?></textarea>
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </form>
 
             <div class="container table-responsive">
-                <h2>Histórico</h2>
-                <table class="table table-bordered table-striped table-hover table-condensed" cellspacing="0" width="100%" id="TabelaContas">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Valor</th>
-                            <th scope="col">Data</th>
-                            <th scope="col">Eliminar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <h2>Registro</h2>
 
-                        <?php while ($row = $resultHistorico->fetch_assoc()) { ?>
+                <form class="formRegistros" action="../../../Data/Contas/Registros/Criar.php">
+                    <input type="text" placeholder="Nome da Conta" pattern=".{1,30}" name="Nome">
+                    <input type="number" placeholder="Montante" name="Montante" value="0" required>
+                    <input type="date" name="Data" id="DataRegistro">
+                    <button type="submit" class="btn btn-primary">Criar</button>
+                </form>
+
+
+
+                <?php if ($resultRegistros->num_rows > 0) { ?>
+
+                    <table class="table table-bordered table-striped table-hover table-condensed" cellspacing="0" width="100%" id="TabelaContas">
+                        <thead class="thead-light">
                             <tr>
-                                <td class="TabBalanco"> <?php echo $row["Balanco"]; ?></td>
-                                <td lass="TabValor"> <?php echo $row["Valor"]; ?></td>
-                                <td lass="TabMensalidade"> <?php echo $row["Mensalidade"]; ?></td>
-                                <td lass="TabDataFinal"> <?php echo $row["DataFinal"]; ?> </td>
-                                <td class="TabDescricao"> <?php echo $row["Descricao"]; ?></td>
-                                <td>
-                                    <a href="./recebido.php?Musicas_Id=<?php echo $row['Musicas_Id']; ?>" class="btn btn-success">Adicionar</a>
-                                    <a href="./recebido.php?Musicas_Id=<?php echo $row['Musicas_Id']; ?>" class="btn btn-info">Alterar</a>
-                                    <a href="../Data/Musicas/Apagar.php?Musicas_Id=<?php echo $row['Musicas_Id']; ?>" class="btn btn-danger">Apagar</a>
-                                </td> -->
+                                <th scope="col">Nome</th>
+                                <th scope="col">Valor</th>
+                                <th scope="col">Data</th>
+                                <th scope="col">Eliminar</th>
                             </tr>
-                        <?php } ?>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
-                </table>
+                            <?php while ($numLinhaRegistros = $resultRegistros->fetch_assoc()) { ?>
+                                <tr>
+                                    <td class="TabBalanco"> <?php echo $numLinhaRegistros["Nome"]; ?></td>
+                                    <td lass="TabValor"> <?php echo $numLinhaRegistros["Montante"]; ?></td>
+                                    <td lass="TabMensalidade"> <?php echo $numLinhaRegistros["Data"]; ?></td>
+                                    <td>
+                                        <a href="../Data/Musicas/Apagar.php?Musicas_Id=<?php echo $numLinhaRegistros['Musicas_Id']; ?>" class="btn btn-danger">Apagar</a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+
+                        </tbody>
+                    </table>
 
             <?php
-        } else {
-            echo "<h2>Não tens acesso a esta conta!! <i>🚷</i></h2>";
-        }
+                } else {
+                    echo "<h2>Não tens nenhum Registro registrado</h2>";
+                }
+            } else {
+                echo "<h2>Não tens acesso a esta conta!! <i>🚷</i></h2>";
+            }
             ?>
             </div>
     </main>

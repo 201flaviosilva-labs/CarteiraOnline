@@ -12,22 +12,20 @@
     <?php
     $User_Id = $_SESSION["SessaoUserId"];
     $Nome =  isset($_GET["Nome"]) ? $_GET["Nome"] : "Null";
-    $Balanco = $_GET["Balanco"];
     $Valor = $_GET["Valor"];
     $Mensalidade = $_GET["Mensalidade"];
     $DataFinal = $_GET["DataFinal"];
     $Descricao = $_GET["Descricao"];
 
-    // echo "$User_Id <br>";
-    // echo "$Nome <br>";
-    // echo "$Balanco <br>";
-    // echo "$Valor <br>";
-    // echo "$Mensalidade <br>";
-    // echo "$DataFinal <br>";
-    // echo "$Descricao <br>";
+    echo "$User_Id <br>";
+    echo "$Nome <br>";
+    echo "$Valor <br>";
+    echo "$Mensalidade <br>";
+    echo "$DataFinal <br>";
+    echo "$Descricao <br>";
 
-    $sql = "INSERT INTO Contas (User_Id, Nome, Balanco, Valor, Mensalidade, DataFinal, Descricao)
-    VALUES ('$User_Id', '$Nome', '$Balanco', '$Valor', '$Mensalidade', '$DataFinal', '$Descricao');";
+    $sql = "INSERT INTO Contas (User_Id, Nome, Valor, Mensalidade, DataFinal, Descricao)
+    VALUES ('$User_Id', '$Nome', '$Valor', '$Mensalidade', '$DataFinal', '$Descricao');";
 
     if ($conn->query($sql) === TRUE) {
         echo "A Conta foi criada!";

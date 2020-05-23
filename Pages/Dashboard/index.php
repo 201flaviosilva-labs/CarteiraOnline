@@ -31,13 +31,12 @@ $resultHistorico = $conn->query($sql);
     </header>
 
     <main>
-        <h2>Criar Conta</h2>
         <form class="d-flex flex-column justify-content-around shadow-lg p-3 mb-5 bg-white rounded" action="../../Data/Contas/Criar.php" method="get">
+            <h2>Criar Conta</h2>
             <input type="text" placeholder="Nome da Conta" pattern=".{1,30}" name="Nome" required>
-            <input type="number" placeholder="Balanço Atual" name="Balanco">
             <input type="number" placeholder="Valor" name="Valor">
             <input type="number" placeholder="Mensalidade" title="Objetivo mensal" name="Mensalidade">
-            <input type="date" placeholder="Data Final" name="DataFinal" id="DataFinal">
+            <input type="date" name="DataFinal" id="DataFinal">
             <textarea placeholder="Descrição" pattern=".{0,500}" name="Descricao">Descrição</textarea>
             <button type="submit" class="btn btn-primary">Criar Conta</button>
         </form>
@@ -45,9 +44,9 @@ $resultHistorico = $conn->query($sql);
         <ul class="shadow-lg p-3 mb-5 bg-white rounded">
             <h2>Contas</h2>
             <?php
-            if ($resultContas->num_rows > 0) { ?>
+            if ($resultContas->num_rows > 0) {
 
-                <?php while ($row = $resultContas->fetch_assoc()) { ?>
+                while ($row = $resultContas->fetch_assoc()) { ?>
                     <li><a href="./Conta/Ver.php?Conta_Id=<?php echo $row['Conta_Id']; ?>">
 
                             <h4> <?php echo $row["Nome"]; ?></h4>
@@ -61,10 +60,8 @@ $resultHistorico = $conn->query($sql);
             ?>
         </ul>
 
-        <hr>
-
         <div class="container table-responsive">
-            <h2>Histórico</h2>
+            <h2>Registros</h2>
             <?php
             if ($resultHistorico->num_rows > 0) { ?>
 

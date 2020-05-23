@@ -1,6 +1,5 @@
 <?PHP
 require "../Conexao.php";
-session_start();
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -22,10 +21,6 @@ session_start();
     // echo "<br/>";
     // echo "PP: " . $PalavraPasse;
     // echo "<br/>";
-    $PalavraPasse = password_hash("$PalavraPasse", PASSWORD_DEFAULT);
-    echo " Este é o teu código de recuperação, para o caso de te esqueceres da Palavra-Passe: $CodigoRecuperacao";
-    $CodigoRecuperacao = password_hash("$CodigoRecuperacao", PASSWORD_DEFAULT);
-    echo "<br />";
     // echo "PP Ecriptado: " . $PalavraPasse;
     // echo "<br/>";
 
@@ -35,6 +30,12 @@ session_start();
     $resultadoImport = $result->fetch_assoc();
 
     if (!isset($resultadoImport["UserName"])) {
+
+        $PalavraPasse = password_hash("$PalavraPasse", PASSWORD_DEFAULT);
+        echo " Este é o teu código de recuperação, para o caso de te esqueceres da Palavra-Passe: $CodigoRecuperacao";
+        $CodigoRecuperacao = password_hash("$CodigoRecuperacao", PASSWORD_DEFAULT);
+        echo "<br />";
+
         $sql = "INSERT INTO Useres (UserName, PalavraPasse, CodigoRecuperacao)
     VALUES ('$UserName', '$PalavraPasse', '$CodigoRecuperacao');";
 

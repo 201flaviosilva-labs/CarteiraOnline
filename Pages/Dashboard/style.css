@@ -1,5 +1,5 @@
 body header {
-  flex-grow: 2;
+  flex-grow: 1;
   background: red;
 }
 
@@ -11,20 +11,15 @@ body main {
   align-items: center;
 }
 
-h2 {
-  width: 100%;
-  text-align: center;
-}
-
 form {
   width: 33%;
   height: 400px;
   justify-content: space-evenly;
 }
 
-h3 {
-  margin-top: 6px;
-  margin-bottom: 2px;
+h2 {
+  width: 100%;
+  text-align: center;
 }
 
 input,

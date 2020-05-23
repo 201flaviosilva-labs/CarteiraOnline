@@ -1,15 +1,24 @@
+:root {
+  --widthMain: 75%;
+}
+
 main {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 h2 {
-  width: 75%;
+  width: var(--widthMain);
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   margin: 6px 0;
+}
+
+h2.H2Table {
+  width: 100%;
 }
 
 h2 a button i img {
@@ -18,32 +27,37 @@ h2 a button i img {
 }
 
 form {
-  width: 75%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 10px;
   grid-row-gap: 10px;
 }
 
-form input:nth-child(1) {
+form.formEditarConta {
+  width: var(--widthMain);
+  grid-template-columns: repeat(2, 1fr);
+}
+
+form.formEditarConta input:nth-child(1) {
   grid-area: 1 / 1 / 2 / 3;
 }
-form input:nth-child(2) {
+
+form.formEditarConta input:nth-child(2) {
   grid-area: 2 / 1 / 3 / 2;
 }
-form input:nth-child(3) {
-  grid-area: 2 / 2 / 3 / 3;
-}
-form input:nth-child(4) {
+
+form.formEditarConta input:nth-child(3) {
   grid-area: 3 / 1 / 4 / 2;
 }
-form textarea {
-  grid-area: 3 / 2 / 5 / 3;
-}
-form input:nth-child(5) {
+
+form.formEditarConta input:nth-child(4) {
   grid-area: 4 / 1 / 5 / 2;
 }
-form button {
+
+form.formEditarConta textarea {
+  grid-area: 2 / 2 / 5 / 3;
+}
+
+form.formEditarConta button {
   grid-area: 5 / 1 / 6 / 3;
 }
 
@@ -71,4 +85,35 @@ textarea:focus {
 
 button {
   margin-top: 6px;
+}
+
+div {
+  width: 100%;
+  background-color: aqua;
+}
+
+table {
+  background-color: rebeccapurple;
+}
+
+form.formRegistros {
+  width: 100%;
+  margin: 10px 0;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+form.formRegistros input:nth-child(1) {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+form.formRegistros input:nth-child(2) {
+  grid-area: 1 / 2 / 2 / 3;
+}
+
+form.formRegistros input:nth-child(3) {
+  grid-area: 1 / 3 / 2 / 4;
+}
+
+form.formRegistros button {
+  grid-area: 2 / 1 / 3 / 4;
 }
