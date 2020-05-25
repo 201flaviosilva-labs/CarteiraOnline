@@ -93,6 +93,11 @@ ul li h4 {
   border-bottom: 1px solid #b3b3b3;
 }
 
+div {
+  width: 100%;
+  background-color: aqua;
+}
+
 body main table tbody tr td.TabDescricao {
   width: 350px;
   word-break: break-all;

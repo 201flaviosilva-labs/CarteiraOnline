@@ -25,10 +25,14 @@
         echo "<h2>Não tens acesso a esta operação!</h2>";
     } else {
 
-        $sql = "DELETE FROM Contas WHERE Conta_Id = $Conta_Id;";
+        $sql = "DELETE FROM Registros WHERE $Conta_Id = Conta_Id;";
 
         if ($conn->query($sql) === TRUE) {
-            echo "A Conta foi Eliminada!";
+            echo "Os Registros da conta foram todos eliminados!";
+            if ($conn->query($sql) === TRUE) {
+                echo "A Conta foi Eliminada!";
+                $sql = "DELETE FROM Contas WHERE $Conta_Id = Conta_Id;";
+            }
         } else {
             echo "Deu um erro a elimminar a conta, tanta mais tarde ou certifica que os dados estão corretos";
             echo "<br>";

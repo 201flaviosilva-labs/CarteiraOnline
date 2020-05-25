@@ -17,22 +17,22 @@
     $DataFinal = $_GET["DataFinal"];
     $Descricao = $_GET["Descricao"];
 
-    echo "$User_Id <br>";
-    echo "$Nome <br>";
-    echo "$Valor <br>";
-    echo "$Mensalidade <br>";
-    echo "$DataFinal <br>";
-    echo "$Descricao <br>";
-
     $sql = "INSERT INTO Contas (User_Id, Nome, Valor, Mensalidade, DataFinal, Descricao)
-    VALUES ('$User_Id', '$Nome', '$Valor', '$Mensalidade', '$DataFinal', '$Descricao');";
+            VALUES ('$User_Id', '$Nome', '$Valor', '$Mensalidade', '$DataFinal', '$Descricao');";
 
     if ($conn->query($sql) === TRUE) {
-        echo "A Conta foi criada!";
+        MensFunc("A Conta foi criada!", $IsErro = false);
+        echo "<button onclick='window.history.back()'>Voltar</button>";
     } else {
-        echo "Deu um erro a criar a conta, tanta mais tarde ou certifica que os dados estão corretos";
-        echo "<br>";
-        echo "Ou então tenta voltar a fazer login";
+        MensFunc("Erro ao criar a conta!");
+    }
+
+    function MensFunc($mensagem, $IsErro = true)
+    {
+        echo "<h2>$mensagem<h2><br>";
+        if ($IsErro) { // É um erro
+            echo "<p>Porfavor tenta mais tarde ou confirma se escreveste tudo corretamente!<p><br>";
+        }
     }
 
     ?>

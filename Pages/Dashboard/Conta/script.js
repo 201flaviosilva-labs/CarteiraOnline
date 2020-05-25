@@ -3,6 +3,6 @@ $(document).ready(function () {
 });
 
 const d = new Date();
-document.getElementById("DataFinal").value = `${String(
+document.getElementById("DataRegistro").value = `${String(
   new Date().toISOString().slice(0, 10)
 )}`;

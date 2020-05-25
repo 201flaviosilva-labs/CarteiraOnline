@@ -1,11 +1,19 @@
 <?php
 require "../../Data/Conexao.php";
 
-$UserName = $_SESSION["SessaoUserId"];
-$sql = "SELECT Conta_Id, Nome, Balanco, Valor FROM Contas INNER JOIN Useres ON Contas.User_Id = Useres.User_Id WHERE Useres.User_Id = $UserName";
+$User_Id = $_SESSION["SessaoUserId"];
+$sql = "SELECT Conta_Id, Nome, Balanco, Valor
+        FROM Contas
+        INNER JOIN Useres
+        ON Contas.User_Id = Useres.User_Id
+        WHERE Useres.User_Id = $User_Id";
 $resultContas = $conn->query($sql);
 
-$resultHistorico = $conn->query($sql);
+
+$sqlRegistro = "SELECT `ContaNome`, `Nome`,`Montante`,`Data`
+                FROM Registros
+                WHERE `User_Id` = $User_Id";
+$resultRegistros = $conn->query($sqlRegistro);
 ?>
 
 <!DOCTYPE html>
@@ -47,10 +55,10 @@ $resultHistorico = $conn->query($sql);
             if ($resultContas->num_rows > 0) {
 
                 while ($row = $resultContas->fetch_assoc()) { ?>
-                    <li><a href="./Conta/Ver.php?Conta_Id=<?php echo $row['Conta_Id']; ?>">
+                    <li><a href="./Conta/index.php?Conta_Id=<?php echo $row['Conta_Id']; ?>">
 
                             <h4> <?php echo $row["Nome"]; ?></h4>
-                            <p> <?php echo $row['Balanco'] . "/" . $row['Valor']; ?></p>
+                            <p> <?php echo $row["Balanco"] . "/" . $row["Valor"]; ?></p>
                         </a>
                     </li>
             <?php }
@@ -63,7 +71,7 @@ $resultHistorico = $conn->query($sql);
         <div class="container table-responsive">
             <h2>Registros</h2>
             <?php
-            if ($resultHistorico->num_rows > 0) { ?>
+            if ($resultRegistros->num_rows > 0) { ?>
 
                 <table class="table table-bordered table-striped table-hover table-condensed" cellspacing="0" width="100%" id="TabelaContas">
                     <thead class="thead-light">
@@ -72,24 +80,16 @@ $resultHistorico = $conn->query($sql);
                             <th scope="col">Nome</th>
                             <th scope="col">Valor</th>
                             <th scope="col">Data</th>
-                            <th scope="col">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        <?php while ($row = $resultHistorico->fetch_assoc()) { ?>
+                        <?php while ($row = $resultRegistros->fetch_assoc()) { ?>
                             <tr>
-                                <!-- <td> <?php echo $row["Nome"]; ?></td>
-                                <td class="TabBalanco"> <?php echo $row["Balanco"]; ?></td>
-                                <td lass="TabValor"> <?php echo $row["Valor"]; ?></td>
-                                <td lass="TabMensalidade"> <?php echo $row["Mensalidade"]; ?></td>
-                                <td lass="TabDataFinal"> <?php echo $row["DataFinal"]; ?> </td>
-                                <td class="TabDescricao"> <?php echo $row["Descricao"]; ?></td>
-                                <td>
-                                    <a href="./recebido.php?Musicas_Id=<?php echo $row['Musicas_Id']; ?>" class="btn btn-success">Adicionar</a>
-                                    <a href="./recebido.php?Musicas_Id=<?php echo $row['Musicas_Id']; ?>" class="btn btn-info">Alterar</a>
-                                    <a href="../Data/Musicas/Apagar.php?Musicas_Id=<?php echo $row['Musicas_Id']; ?>" class="btn btn-danger">Apagar</a>
-                                </td> -->
+                                <td> <?php echo $row["ContaNome"]; ?></td>
+                                <td> <?php echo $row["Nome"]; ?></td>
+                                <td> <?php echo $row["Montante"]; ?></td>
+                                <td> <?php echo $row["Data"]; ?></td>
                             </tr>
                         <?php } ?>
 

@@ -12,52 +12,40 @@ require "../Conexao.php";
 
 <body>
     <?php
-    // $UserName =  "user" . rand();
-    $UserName =  isset($_POST["UserName"]) ? $_POST["UserName"] : "nop";
-    $PalavraPasse = isset($_POST["PalavraPasse"]) ? $_POST["PalavraPasse"] : "123";
-    $CodigoRecuperacao = randomPassword();
+    try {
+        $UserName =  isset($_POST["UserName"]) ? $_POST["UserName"] : "nop";
+        $PalavraPasse = isset($_POST["PalavraPasse"]) ? $_POST["PalavraPasse"] : "123";
 
-    // echo "User: " . $UserName;
-    // echo "<br/>";
-    // echo "PP: " . $PalavraPasse;
-    // echo "<br/>";
-    // echo "PP Ecriptado: " . $PalavraPasse;
-    // echo "<br/>";
+        $sqlChek = "SELECT UserName FROM Useres WHERE UserName = '$UserName';";
+        $result = $conn->query($sqlChek);
+        $resultadoImport = $result->fetch_assoc();
 
+        if (!isset($resultadoImport["UserName"])) {
 
-    $sqlChek = "SELECT UserName FROM Useres WHERE UserName='$UserName';";
-    $result = $conn->query($sqlChek);
-    $resultadoImport = $result->fetch_assoc();
+            $PalavraPasse = password_hash("$PalavraPasse", PASSWORD_DEFAULT);
+            echo "<br />";
 
-    if (!isset($resultadoImport["UserName"])) {
+            $sql = "INSERT INTO Useres (UserName, PalavraPasse)
+                    VALUES ('$UserName', '$PalavraPasse');";
 
-        $PalavraPasse = password_hash("$PalavraPasse", PASSWORD_DEFAULT);
-        echo " Este é o teu código de recuperação, para o caso de te esqueceres da Palavra-Passe: $CodigoRecuperacao";
-        $CodigoRecuperacao = password_hash("$CodigoRecuperacao", PASSWORD_DEFAULT);
-        echo "<br />";
-
-        $sql = "INSERT INTO Useres (UserName, PalavraPasse, CodigoRecuperacao)
-    VALUES ('$UserName', '$PalavraPasse', '$CodigoRecuperacao');";
-
-        if ($conn->query($sql) === TRUE) {
-            echo "Os dados foram adicionados!";
+            if ($conn->query($sql) === TRUE) {
+                MensFunc("A tua conta foi criada!", false);
+            } else {
+                MensFunc("Algo Não Correu Como Experado ao Criar Conta!");
+            }
         } else {
-            echo "Olha deu erro nisto ao adicionar osx dados: " . $sql;
+            MensFunc("Não podes usar esse Nome de Utilizador porque já existe!");
         }
-    } else {
-        echo "Opá já existe um mens com esse nome";
+    } catch (Exception $e) {
+        MensFunc("Algo Não Correu Como Experado ao Criar Conta!");
     }
 
-    function randomPassword()
+    function MensFunc($mensagem, $IsErro = true)
     {
-        $caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&.,-_><";
-        $palavra = array();
-        $tamanhoCaracteres = strlen($caracteres) - 1;
-        for ($i = 0; $i < 10; $i++) {
-            $n = rand(0, $tamanhoCaracteres);
-            $palavra[] = $caracteres[$n];
+        echo "<h2>$mensagem</h2><br>";
+        if ($IsErro) { // É um erro
+            echo "<p>Porfavor tenta mais tarde ou confirma se escreveste tudo corretamente!<p><br>";
         }
-        return implode($palavra);
     }
     ?>
 </body>

@@ -52,7 +52,8 @@ $resultRegistros = $conn->query($sql);
         <?php if ($numLinhasContas > 0) { ?>
             <h2>
                 <span>Editar</span>
-                <a href="../../../Data/Contas/Eliminar.php?Conta_Id=<?php echo $Conta_Id; ?>"> <button class="btn btn-danger">
+                <a href="../../../Data/Contas/Eliminar.php?Conta_Id=<?php echo $Conta_Id; ?>">
+                    <button class="btn btn-danger">
                         <i>
                             <img src="../../../Assets/Icons/trash.svg" alt="Eliminar">
                         </i>
@@ -69,17 +70,17 @@ $resultRegistros = $conn->query($sql);
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </form>
 
+
+
             <div class="container table-responsive">
                 <h2>Registro</h2>
 
                 <form class="formRegistros" action="../../../Data/Contas/Registros/Criar.php">
-                    <input type="text" placeholder="Nome da Conta" pattern=".{1,30}" name="Nome">
+                    <input type="text" placeholder="Nome do Registro" pattern=".{1,30}" name="Nome">
                     <input type="number" placeholder="Montante" name="Montante" value="0" required>
                     <input type="date" name="Data" id="DataRegistro">
                     <button type="submit" class="btn btn-primary">Criar</button>
                 </form>
-
-
 
                 <?php if ($resultRegistros->num_rows > 0) { ?>
 
@@ -89,18 +90,18 @@ $resultRegistros = $conn->query($sql);
                                 <th scope="col">Nome</th>
                                 <th scope="col">Valor</th>
                                 <th scope="col">Data</th>
-                                <th scope="col">Eliminar</th>
+                                <th>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
 
                             <?php while ($numLinhaRegistros = $resultRegistros->fetch_assoc()) { ?>
                                 <tr>
-                                    <td class="TabBalanco"> <?php echo $numLinhaRegistros["Nome"]; ?></td>
-                                    <td lass="TabValor"> <?php echo $numLinhaRegistros["Montante"]; ?></td>
-                                    <td lass="TabMensalidade"> <?php echo $numLinhaRegistros["Data"]; ?></td>
-                                    <td>
-                                        <a href="../Data/Musicas/Apagar.php?Musicas_Id=<?php echo $numLinhaRegistros['Musicas_Id']; ?>" class="btn btn-danger">Apagar</a>
+                                    <td> <?php echo $numLinhaRegistros["Nome"]; ?></td>
+                                    <td> <?php echo $numLinhaRegistros["Montante"]; ?></td>
+                                    <td> <?php echo $numLinhaRegistros["Data"]; ?></td>
+                                    <td class="TabEliminar">
+                                        <a href="../../../Data/Contas/Registros/Eliminar.php?Registro_Id=<?php echo $numLinhaRegistros['Registro_Id']; ?>" class="btn btn-danger">Apagar</a>
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -124,11 +125,7 @@ $resultRegistros = $conn->query($sql);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.13/js/dataTables.bootstrap4.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            $("#TabelaContas").DataTable();
-        });
-    </script>
+    <script src="./script"></script>
 </body>
 
 </html>
