@@ -10,21 +10,32 @@
 
 <body>
     <?php
-    $User_Id = $_SESSION["SessaoUserId"];
-    $Nome =  isset($_GET["Nome"]) ? $_GET["Nome"] : "Null";
-    $Valor = $_GET["Valor"];
-    $Mensalidade = $_GET["Mensalidade"];
-    $DataFinal = $_GET["DataFinal"];
-    $Descricao = $_GET["Descricao"];
+    try {
+        $User_Id = $_SESSION["SessaoUserId"];
+        $Nome =  $_GET["Nome"];
+        $Valor = $_GET["Valor"] ? $_GET["Valor"] : 0;
+        $Mensalidade = $_GET["Mensalidade"] ? $_GET["Mensalidade"] : 0;
+        $DataFinal = $_GET["DataFinal"] ? $_GET["DataFinal"] : date("Y-m-d");
+        $Descricao = $_GET["Descricao"] ? $_GET["Descricao"] : "";
 
-    $sql = "INSERT INTO Contas (User_Id, Nome, Valor, Mensalidade, DataFinal, Descricao)
+        echo "$User_Id  <br>";
+        echo "$Nome  <br>";
+        echo "$Valor  <br>";
+        echo "$Mensalidade  <br>";
+        echo "$DataFinal  <br>";
+        echo "$Descricao  <br>";
+
+        $sql = "INSERT INTO Contas (User_Id, Nome, Valor, Mensalidade, DataFinal, Descricao)
             VALUES ('$User_Id', '$Nome', '$Valor', '$Mensalidade', '$DataFinal', '$Descricao');";
 
-    if ($conn->query($sql) === TRUE) {
-        MensFunc("A Conta foi criada!", $IsErro = false);
-        echo "<button onclick='window.history.back()'>Voltar</button>";
-    } else {
-        MensFunc("Erro ao criar a conta!");
+        if ($conn->query($sql) === TRUE) {
+            MensFunc("A Conta foi criada!", false);
+            echo "<button onclick='window.history.back()'>Voltar</button>";
+        } else {
+            MensFunc("Erro ao criar a conta!");
+        }
+    } catch (Exception $e) {
+        MensFunc("Algo deu errado!");
     }
 
     function MensFunc($mensagem, $IsErro = true)

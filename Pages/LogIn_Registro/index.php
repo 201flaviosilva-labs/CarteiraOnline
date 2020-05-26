@@ -14,6 +14,22 @@
 <body>
     <header>
         <h1 class="w-100 text-center align-middle">Bem Vindo 🖖</h1>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="../../index.html">Carteira Online</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="../../index.html">Home</a>
+                    <a class="nav-item nav-link" href="../Dashboard/index.php">Dashboard</a>
+                </div>
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="#">Entrar/Registrar</a>
+                    <!-- <a class="nav-item nav-link" href="../../Data/Registro/Sair.php">Sair</a> -->
+                </div>
+            </div>
+        </nav>
     </header>
 
     <!-- Iniciar Sessão -->

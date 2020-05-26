@@ -3,6 +3,7 @@
 }
 
 main {
+  margin-top: 10px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -89,7 +90,6 @@ button {
 
 div {
   width: 100%;
-  background-color: aqua;
 }
 
 form.formRegistros {

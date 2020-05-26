@@ -10,64 +10,67 @@
 
 <body>
     <?php
-    $User_Id = $_SESSION["SessaoUserId"];
-    $Conta_Id = $_SESSION["SessaoContaId"];
-    $Nome =  $_GET["Nome"];
-    $Montante =  $_GET["Montante"];
-    $Data =  isset($_GET["Data"]) ? $_GET["Data"] : date("Y/m/d");
+    try {
+        $User_Id = $_SESSION["SessaoUserId"];
+        $Conta_Id = $_SESSION["SessaoContaId"];
+        $Nome =  $_GET["Nome"];
+        $Montante =  $_GET["Montante"];
+        $Data =  isset($_GET["Data"]) ? $_GET["Data"] : date("Y/m/d");
 
-    // echo "$User_Id <br>";
-    // echo "$Conta_Id <br>";
-    // echo "$Nome <br>";
-    // echo "$Montante <br>";
-    // echo "$Data <br>";
-
-
-    $sql = "SELECT *
+        $sql = "SELECT *
         FROM Contas
         INNER JOIN Useres
         ON Contas.User_Id = Useres.User_Id
         WHERE Useres.User_Id = $User_Id
         AND $Conta_Id = Contas.Conta_Id";
-    $resultContas = $conn->query($sql);
+        $resultContas = $conn->query($sql);
 
-    if (!$resultContas->num_rows > 0) {
-        echo "<h2>Não tens acesso a esta operação!</h2>";
-    } else {
+        if (!$resultContas->num_rows > 0) {
+            MensFunc("Não acesso a esta operação!");
+        } else {
 
-        $resultContaNome = "SELECT Nome AS ContaNome
+            $resultContaNome = "SELECT Nome AS ContaNome
                     FROM Contas
                     WHERE $Conta_Id = Conta_Id;";
-        $resultContaNome = $conn->query($resultContaNome);
-        $resultContaNome = $resultContaNome->fetch_assoc();
-        $resultContaNome = $resultContaNome["ContaNome"];
+            $resultContaNome = $conn->query($resultContaNome);
+            $resultContaNome = $resultContaNome->fetch_assoc();
+            $resultContaNome = $resultContaNome["ContaNome"];
 
-        $sql = "INSERT INTO Registros (User_Id, Conta_Id, ContaNome, Nome, Montante, Data)
+            $sql = "INSERT INTO Registros (User_Id, Conta_Id, ContaNome, Nome, Montante, Data)
                 VALUES ('$User_Id', '$Conta_Id', '$resultContaNome', '$Nome', '$Montante', '$Data');";
 
-        if ($conn->query($sql) === TRUE) {
+            if ($conn->query($sql) === TRUE) {
 
-            $sqlSoma = "SELECT SUM(Montante) AS Montante
+                $sqlSoma = "SELECT SUM(Montante) AS Montante
                     FROM Registros
                     WHERE $Conta_Id = Conta_Id;";
-            $resultSoma = $conn->query($sqlSoma);
-            $resultSoma = $resultSoma->fetch_assoc();
-            $resultSoma = $resultSoma["Montante"];
+                $resultSoma = $conn->query($sqlSoma);
+                $resultSoma = $resultSoma->fetch_assoc();
+                $resultSoma = $resultSoma["Montante"];
 
-            try {
-                $sqlBalanco = "UPDATE `Contas`
+                try {
+                    $sqlBalanco = "UPDATE `Contas`
                         SET Balanco = $resultSoma
                         WHERE `Contas`.`Conta_Id` = $Conta_Id;";
-                $conn->query($sqlBalanco);
-            } catch (Exception $e) {
-                echo 'Erro: ' . $e->getMessage();
+                    $conn->query($sqlBalanco);
+                } catch (Exception $e) {
+                    MensFunc("Não foi possivel alterar o balanço!");
+                }
+                MensFunc("Registro criado!", false);
+                // header('Location: ' . "../../../Pages/Dashboard/Conta/index.php?Conta_Id=$Conta_Id");
+            } else {
+                MensFunc("Não foi possivel criar a conta!");
             }
+        }
+    } catch (Exception $e) {
+        MensFunc("Algo deu errado!");
+    }
 
-            echo "O Registro foi criado na conta!";
-        } else {
-            echo "Deu um erro a criar a conta, tenta mais tarde ou certifica que os dados estão corretos!";
-            echo "<br>";
-            echo "Ou então tenta voltar a fazer login!";
+    function MensFunc($mensagem, $IsErro = true)
+    {
+        echo "<h2>$mensagem<h2><br>";
+        if ($IsErro) { // É um erro
+            echo "<p>Porfavor tenta mais tarde ou confirma se escreveste tudo corretamente!<p><br>";
         }
     }
 

@@ -10,60 +10,71 @@
 
 <body>
     <?php
-    $User_Id = $_SESSION["SessaoUserId"];
-    $Conta_Id =  $_SESSION["SessaoContaId"];
-    $Registro_Id =  $_GET["Registro_Id"];
+    try {
+        $User_Id = $_SESSION["SessaoUserId"];
+        $Conta_Id =  $_SESSION["SessaoContaId"];
+        $Registro_Id =  $_GET["Registro_Id"];
 
-    $sql = "SELECT *
+        $sql = "SELECT *
         FROM Contas
         INNER JOIN Useres
         ON Contas.User_Id = Useres.User_Id
         WHERE Useres.User_Id = $User_Id
         AND $Conta_Id = Contas.Conta_Id";
-    $resultContas = $conn->query($sql);
+        $resultContas = $conn->query($sql);
 
-    if (!$resultContas->num_rows > 0) {
-        echo "<h2>Não tens acesso a esta operação!</h2>";
-    } else {
+        if (!$resultContas->num_rows > 0) {
+            MensFunc("Não tens acesso a esta operação!");
+        } else {
 
-        $sql = "SELECT *
+            $sql = "SELECT *
         FROM Registros
         WHERE $User_Id = User_Id
         AND $Conta_Id = Conta_Id
         AND $Registro_Id = Registro_Id";
-        $resultRegistro = $conn->query($sql);
+            $resultRegistro = $conn->query($sql);
 
-        if (!$resultRegistro->num_rows > 0) {
-            echo "<h2>Operação não foi possivel de ser concluida!</h2>";
-        } else {
+            if (!$resultRegistro->num_rows > 0) {
+                MensFunc("Não foi possivel eliminar o registro!");
+            } else {
 
-            $sql = "DELETE FROM Registros WHERE $Registro_Id = Registro_Id;";
+                $sql = "DELETE FROM Registros WHERE $Registro_Id = Registro_Id;";
 
-            if ($conn->query($sql) === TRUE) {
+                if ($conn->query($sql) === TRUE) {
 
-                $sqlSoma = "SELECT SUM(Montante) AS Montante
+                    $sqlSoma = "SELECT SUM(Montante) AS Montante
                     FROM Registros
                     WHERE $Conta_Id = Conta_Id;";
-                $resultSoma = $conn->query($sqlSoma);
-                $resultSoma = $resultSoma->fetch_assoc();
-                $resultSoma = $resultSoma["Montante"];
+                    $resultSoma = $conn->query($sqlSoma);
+                    $resultSoma = $resultSoma->fetch_assoc();
+                    $resultSoma = $resultSoma["Montante"];
+                    $resultSoma = $resultSoma ? $resultSoma : 0;
 
-                try {
-                    $sqlBalanco = "UPDATE `Contas`
+                    try {
+                        $sqlBalanco = "UPDATE `Contas`
                         SET Balanco = $resultSoma
                         WHERE `Contas`.`Conta_Id` = $Conta_Id;";
-                    $conn->query($sqlBalanco);
-                } catch (Exception $e) {
-                    echo 'Erro: ' . $e->getMessage();
-                }
+                        $conn->query($sqlBalanco);
+                    } catch (Exception $e) {
+                        MensFunc("Não foi possivel alterar o balanço!");
+                    }
 
-                echo "<h2>A Registro Eliminado!</h2>";
-                header('Location: ' . "../../../Pages/Dashboard/Conta/index.php?Conta_Id=$Conta_Id");
-            } else {
-                echo "Deu um erro a elimminar na operação, tenta novamente!";
-                echo "<br>";
-                echo "Ou então tenta voltar a fazer login";
+                    MensFunc("O Registro foi eliminado!", false);
+                    // header('Location: ' . "../../../Pages/Dashboard/Conta/index.php?Conta_Id=$Conta_Id");
+                } else {
+                    MensFunc("Não foi possivel eliminar o Registro!");
+                }
             }
+        }
+    } catch (Exception $e) {
+        MensFunc("Algo deu errado!");
+    }
+
+    function MensFunc($mensagem, $IsErro = true)
+    {
+        echo "<h2>$mensagem<h2><br>";
+        if ($IsErro) { // É um erro
+            echo "<p>Porfavor tenta mais tarde ou confirma se escreveste tudo corretamente!<p><br>";
         }
     }
     ?>

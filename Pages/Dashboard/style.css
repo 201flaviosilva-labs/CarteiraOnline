@@ -1,11 +1,11 @@
 body header {
   flex-grow: 1;
-  background: red;
 }
 
 body main {
   flex-grow: 10;
   width: 100%;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,13 +60,13 @@ ul {
   grid-row-gap: 10px;
 }
 
-ul h2 {
+main ul h2 {
   grid-area: 1 / 1 / 2 / 4;
   border-bottom: 2px solid #ccc;
   border-radius: 4px;
 }
 
-ul li a {
+main ul li a {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,17 +77,17 @@ ul li a {
   transition: 0.3s;
 }
 
-ul li a:hover {
+main ul li a:hover {
   box-shadow: 10px 10px 8px rgb(0, 0, 0, 0.75);
   transform: scale(1.1);
 }
 
-ul li a:active {
+main ul li a:active {
   box-shadow: 5px 5px 4px rgb(0, 0, 0, 0.75);
   transform: scale(1.05);
 }
 
-ul li h4 {
+main ul li h4 {
   width: 90%;
   text-align: center;
   border-bottom: 1px solid #b3b3b3;
@@ -95,7 +95,6 @@ ul li h4 {
 
 div {
   width: 100%;
-  background-color: aqua;
 }
 
 body main table tbody tr td.TabDescricao {
