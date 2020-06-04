@@ -7,34 +7,40 @@ require "../Conexao.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css?v=<?php echo time(); ?>">
     <title>Registrar</title>
 </head>
 
 <body>
     <?php
     try {
-        $UserName =  isset($_POST["UserName"]) ? $_POST["UserName"] : "nop";
-        $PalavraPasse = isset($_POST["PalavraPasse"]) ? $_POST["PalavraPasse"] : "123";
+        $UserName =  isset($_POST["UserName"]) ? $_POST["UserName"] : "";
+        $PalavraPasse = isset($_POST["PalavraPasse"]) ? $_POST["PalavraPasse"] : "";
 
-        $sqlChek = "SELECT UserName FROM Useres WHERE UserName = '$UserName';";
-        $result = $conn->query($sqlChek);
-        $resultadoImport = $result->fetch_assoc();
+        if (isset($UserName)) {
+            $sqlChek = "SELECT UserName FROM Useres WHERE UserName = '$UserName';";
+            $result = $conn->query($sqlChek);
+            $resultadoImport = $result->fetch_assoc();
 
-        if (!isset($resultadoImport["UserName"])) {
+            if (!isset($resultadoImport["UserName"])) {
 
-            $PalavraPasse = password_hash("$PalavraPasse", PASSWORD_DEFAULT);
-            echo "<br />";
+                $PalavraPasse = password_hash("$PalavraPasse", PASSWORD_DEFAULT);
+                echo "<br />";
 
-            $sql = "INSERT INTO Useres (UserName, PalavraPasse)
-                    VALUES ('$UserName', '$PalavraPasse');";
+                $sql = "INSERT INTO Useres (UserName, PalavraPasse)
+                        VALUES ('$UserName', '$PalavraPasse');";
 
-            if ($conn->query($sql) === TRUE) {
-                MensFunc("A tua conta foi criada!", false);
+                if ($conn->query($sql) === TRUE) {
+                    MensFunc("A tua conta foi criada!", false);
+                } else {
+                    MensFunc("Algo Não Correu Como Experado ao Criar Conta!");
+                }
             } else {
-                MensFunc("Algo Não Correu Como Experado ao Criar Conta!");
+                MensFunc("Não podes usar esse Nome de Utilizador porque já existe!");
+                MensFunc("Os dados não estão corretos!");
             }
-        } else {
-            MensFunc("Não podes usar esse Nome de Utilizador porque já existe!");
+        }else {
+            MensFunc("Os dados não estão corretos!");
         }
     } catch (Exception $e) {
         MensFunc("Algo Não Correu Como Experado ao Criar Conta!");

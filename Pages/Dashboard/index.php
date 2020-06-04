@@ -1,19 +1,32 @@
 <?php
 require "../../Data/Conexao.php";
+try {
+    if (isset($_SESSION["SessaoUserId"])) {
+        $User_Id = $_SESSION["SessaoUserId"];
 
-$User_Id = $_SESSION["SessaoUserId"];
-$sql = "SELECT Conta_Id, Nome, Balanco, Valor
-        FROM Contas
-        INNER JOIN Useres
-        ON Contas.User_Id = Useres.User_Id
-        WHERE Useres.User_Id = $User_Id";
-$resultContas = $conn->query($sql);
+        $sqlUser = "SELECT UserName
+            FROM Useres
+            WHERE User_Id = $User_Id";
+        $resultUser = $conn->query($sqlUser);
+        $linhaUser = $resultUser->fetch_assoc();
 
 
-$sqlRegistro = "SELECT `ContaNome`, `Nome`,`Montante`,`Data`
-                FROM Registros
-                WHERE `User_Id` = $User_Id";
-$resultRegistros = $conn->query($sqlRegistro);
+        $sql = "SELECT Conta_Id, Nome, Balanco, Valor
+            FROM Contas
+            INNER JOIN Useres
+            ON Contas.User_Id = Useres.User_Id
+            WHERE Useres.User_Id = $User_Id";
+        $resultContas = $conn->query($sql);
+    
+    
+        $sqlRegistro = "SELECT `ContaNome`, `Nome`,`Montante`,`Data`
+                    FROM Registros
+                    WHERE `User_Id` = $User_Id";
+        $resultRegistros = $conn->query($sqlRegistro);
+    }
+} catch (\Throwable $th) {
+    echo "<h2> Erro!! </h2>";
+}
 ?>
 
 <!DOCTYPE html>
@@ -45,14 +58,16 @@ $resultRegistros = $conn->query($sqlRegistro);
                 </div>
                 <div class="navbar-nav">
                     <!-- <a class="nav-item nav-link" href="./Pages/LogIn_Registro/index.php">Entrar/Registrar</a> -->
-                    <a class="nav-item nav-link" href="../../Data/Registro/Sair.php">Sair</a>
+                <?php if (isset($linhaUser["UserName"])) {?> 
+                    <a class="nav-item nav-link" href="../../Data/Registro/Sair.php"> <?php echo $linhaUser["UserName"]; ?> (Sair)</a>
+                <?php } ?> 
                 </div>
             </div>
         </nav>
     </header>
 
     <?php
-    if ($User_Id > 0) { ?>
+    if (isset($User_Id) > 0) { ?>
         <main>
             <form class="d-flex flex-column justify-content-around shadow-lg p-3 mb-5 bg-white rounded" action="../../Data/Contas/Criar.php" method="get">
                 <h2>Criar Conta</h2>

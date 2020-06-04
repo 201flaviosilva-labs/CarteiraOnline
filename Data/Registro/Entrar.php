@@ -8,6 +8,7 @@ require "../Conexao.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css?v=<?php echo time(); ?>">
     <title>LogIn</title>
 </head>
 
@@ -18,18 +19,13 @@ require "../Conexao.php";
         $UserName = isset($_POST["UserName"]) ? $_POST["UserName"] : "Bug";
         $PalavraPasse = isset($_POST["PalavraPasse"]) ? $_POST["PalavraPasse"] : "123";
 
-        echo "User: " . $UserName;
-        echo "<br/>";
-        echo "PP: " . $PalavraPasse;
-        echo "<br/>";
-
         $sql = "SELECT * FROM Useres WHERE UserName='$UserName';"; // Query
         $result = $conn->query($sql);
 
         $resultadoImport = $result->fetch_assoc();
         echo "<br/>";
 
-        if ($resultadoImport["UserName"]) {
+        if (isset($resultadoImport["UserName"])) {
             if (password_verify("$PalavraPasse", $resultadoImport["PalavraPasse"])) {
                 $_SESSION["SessaoUserId"] = $resultadoImport["User_Id"];
                 MensFunc("nome de User e Palavra-Passe estão corretas!", false);

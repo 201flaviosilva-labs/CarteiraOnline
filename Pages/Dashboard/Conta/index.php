@@ -51,7 +51,8 @@ try {
 
         <header class="w-100 text-center align-middle">
             <h1><?php echo $linha["Nome"]; ?></h1>
-            <p><?php echo $linha["Balanco"]; ?>/<?php echo $linha["Valor"]; ?></p>
+            <p>Balanço: <b><?php echo $linha["Balanco"] . "/" . $linha["Valor"]; ?></b></p>
+            <p>Tempo Estimado: <b><?php echo ($linha["Valor"]-$linha["Balanco"])/($linha["Mensalidade"] ? $linha["Mensalidade"] : 1);?></b> M.</p>
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <a class="navbar-brand" href="../../../index.html">Carteira Online</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,12 +70,13 @@ try {
                 </div>
             </nav>
         </header>
+
         <main>
             <?php if ($numLinhasContas > 0) { ?>
                 <h2>
                     <span>Editar</span>
                     <a href="../../../Data/Contas/Eliminar.php?Conta_Id=<?php echo $Conta_Id; ?>">
-                        <button class="btn btn-danger">
+                        <button class="btn btn-danger" title="Ao Clicar Apagas a Conta">
                             <i>
                                 <img src="../../../Assets/Icons/trash.svg" alt="Eliminar">
                             </i>
@@ -83,11 +85,11 @@ try {
                 </h2>
 
                 <form class="formEditarConta shadow-lg p-3 mb-5 bg-white rounded" action="../../../Data/Contas/Editar.php" method="GET">
-                    <input type="text" placeholder="Nome da Conta" pattern=".{1,30}" name="Nome" value="<?php echo $linha["Nome"]; ?>" required>
-                    <input type="number" min="0" placeholder="Valor" name="Valor" value="<?php echo $linha["Valor"]; ?>">
-                    <input type="number" min="0" placeholder="Mensalidade" title="Objetivo mensal" name="Mensalidade" value="<?php echo $linha["Mensalidade"]; ?>">
-                    <input type="date" name="DataFinal" id="DataFinal" value="<?php echo $linha["DataFinal"]; ?>">
-                    <textarea placeholder="Descrição" pattern=".{0,500}" name="Descricao" value="<?php echo $linha["Descricao"]; ?>"><?php echo $linha["Descricao"]; ?></textarea>
+                    <input type="text" placeholder="Nome da Conta" title="Nome" pattern=".{1,30}" name="Nome" value="<?php echo $linha["Nome"]; ?>" required>
+                    <input type="number" min="0" placeholder="Valor" title="Valor" name="Valor" value="<?php echo $linha["Valor"]; ?>">
+                    <input type="number" min="0" placeholder="Mensalidade" title="Mensalidade" title="Objetivo mensal" name="Mensalidade" value="<?php echo $linha["Mensalidade"]; ?>">
+                    <input type="date" title="Data Final" name="DataFinal" id="DataFinal" value="<?php echo $linha["DataFinal"]; ?>">
+                    <textarea placeholder="Descrição" title="Descrição" pattern=".{0,500}" name="Descricao" value="<?php echo $linha["Descricao"]; ?>"><?php echo $linha["Descricao"]; ?></textarea>
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </form>
 

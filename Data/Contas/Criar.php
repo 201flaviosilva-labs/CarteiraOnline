@@ -18,12 +18,13 @@
         $DataFinal = $_GET["DataFinal"] ? $_GET["DataFinal"] : date("Y-m-d");
         $Descricao = $_GET["Descricao"] ? $_GET["Descricao"] : "";
 
-        echo "$User_Id  <br>";
-        echo "$Nome  <br>";
-        echo "$Valor  <br>";
-        echo "$Mensalidade  <br>";
-        echo "$DataFinal  <br>";
-        echo "$Descricao  <br>";
+        echo "<div>";
+        echo "<p>Nome: $Nome;</p>";
+        echo "<p>Valor: $Valor;</p>";
+        echo "<p>Mensalidade: $Mensalidade;</p>";
+        echo "<p>Data Final: $DataFinal;</p>";
+        echo "<p>Descrição: $Descricao:</p>";
+        echo "</div>";
 
         $sql = "INSERT INTO Contas (User_Id, Nome, Valor, Mensalidade, DataFinal, Descricao)
             VALUES ('$User_Id', '$Nome', '$Valor', '$Mensalidade', '$DataFinal', '$Descricao');";

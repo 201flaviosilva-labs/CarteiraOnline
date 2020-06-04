@@ -13,12 +13,19 @@
     <?php
     try {
         $User_Id = $_SESSION["SessaoUserId"];
-        $Conta_Id =  $_SESSION["SessaoContaId"];
-        $Nome =  isset($_GET["Nome"]) ? $_GET["Nome"] : "Null";
-        $Valor = $_GET["Valor"];
-        $Mensalidade = $_GET["Mensalidade"];
-        $DataFinal = $_GET["DataFinal"];
-        $Descricao = $_GET["Descricao"];
+        $Nome =  $_GET["Nome"];
+        $Valor = $_GET["Valor"] ? $_GET["Valor"] : 0;
+        $Mensalidade = $_GET["Mensalidade"] ? $_GET["Mensalidade"] : 0;
+        $DataFinal = $_GET["DataFinal"] ? $_GET["DataFinal"] : date("Y-m-d");
+        $Descricao = $_GET["Descricao"] ? $_GET["Descricao"] : "";
+
+        echo "<div>";
+        echo "<p>Nome: $Nome;</p>";
+        echo "<p>Valor: $Valor;</p>";
+        echo "<p>Mensalidade: $Mensalidade;</p>";
+        echo "<p>Data Final: $DataFinal;</p>";
+        echo "<p>Descrição: $Descricao:</p>";
+        echo "</div>";
 
         $sql = "SELECT *
         FROM Contas
