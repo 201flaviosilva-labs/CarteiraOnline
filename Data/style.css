@@ -10,6 +10,7 @@ body {
   height: 100%;
   margin: 0;
 }
+
 body {
   background-color: snow;
   display: flex;
@@ -18,22 +19,31 @@ body {
   justify-content: center;
 }
 
+div {
+  border: 1px solid royalblue;
+  border-radius: 6px;
+  padding: 10px;
+}
+
 button,
 a {
-  border: 2px solid red;
-  border-radius: 4px;
   padding: 6px 8px;
+  text-decoration: none;
+  border: 2px solid royalblue;
+  border-radius: 4px;
   background-color: white;
-  color: red;
+  color: royalblue;
   transition: 0.5s;
 }
+
 button:hover,
 a:hover {
-  background-color: red;
+  background-color: royalblue;
   color: white;
 }
+
 button:active,
 a:active {
-  color: red;
+  color: royalblue;
   transform: scale(0.95);
 }

@@ -5,6 +5,12 @@ try {
     $_SESSION["SessaoContaId"] = $Conta_Id;
     $User_Id = $_SESSION["SessaoUserId"];
 
+    $sqlUser = "SELECT UserName
+            FROM Useres
+            WHERE User_Id = $User_Id";
+    $resultUser = $conn->query($sqlUser);
+    $linhaUser = $resultUser->fetch_assoc();
+
     $sql = "SELECT Contas.*
         FROM Contas
         INNER JOIN Useres
@@ -12,7 +18,7 @@ try {
         WHERE Useres.User_Id = $User_Id
         AND $Conta_Id = Contas.Conta_Id";
     $resultContas = $conn->query($sql);
-    $numLinhasContas = $resultContas->num_rows;
+    $numLinhasContas = isset($resultContas->num_rows);
     $linha = $resultContas->fetch_assoc();
 
     $sql = "SELECT Registros.*
@@ -50,9 +56,16 @@ try {
     if ($User_Id > 0 && $numLinhasContas > 0) { ?>
 
         <header class="w-100 text-center align-middle">
-            <h1><?php echo $linha["Nome"]; ?></h1>
-            <p>Balanço: <b><?php echo $linha["Balanco"] . "/" . $linha["Valor"]; ?></b></p>
-            <p>Tempo Estimado: <b><?php echo ($linha["Valor"]-$linha["Balanco"])/($linha["Mensalidade"] ? $linha["Mensalidade"] : 1);?></b> M.</p>
+            <h1><?php echo isset($linha["Nome"])?$linha["Nome"]:"Nome"; ?></h1>
+            <p>Balanço: <b><?php echo isset($linha["Balanco"]) . "/" . isset($linha["Valor"]) ? $linha["Valor"] : 0; ?></b></p>
+            <p>Tempo Estimado: <b>
+                <?php
+                    $valorUser = isset($linha["Valor"])?$linha["Valor"]:0;
+                    $BalancoUser = isset($linha["Balanco"])?$linha["Balanco"]:0;
+                    $MensalidadeUser = isset($linha["Mensalidade"])?$linha["Mensalidade"]:1;
+                echo ($valorUser-$BalancoUser)/$MensalidadeUser;
+                ?>
+            </b> M.</p>
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <a class="navbar-brand" href="../../../index.html">Carteira Online</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +78,14 @@ try {
                     </div>
                     <div class="navbar-nav">
                         <!-- <a class="nav-item nav-link" href="./Pages/LogIn_Registro/index.php">Entrar/Registrar</a> -->
-                        <a class="nav-item nav-link" href="../../../Data/Registro/Sair.php">Sair</a>
+                        <?php if (isset($linhaUser["UserName"])) { ?> 
+                            <a class="nav-item nav-link" href="../../../Data/Registro/Sair.php">
+                            <?php echo isset($linhaUser["UserName"]); ?> (Sair)</a>
+                        <?php } else { ?> 
+                            <a class="nav-item nav-link" href="../../LogIn_Registro/index.php">
+                                Entrar/Registrar
+                            </a>
+                        <?php } ?> 
                     </div>
                 </div>
             </nav>
@@ -85,11 +105,16 @@ try {
                 </h2>
 
                 <form class="formEditarConta shadow-lg p-3 mb-5 bg-white rounded" action="../../../Data/Contas/Editar.php" method="GET">
-                    <input type="text" placeholder="Nome da Conta" title="Nome" pattern=".{1,30}" name="Nome" value="<?php echo $linha["Nome"]; ?>" required>
-                    <input type="number" min="0" placeholder="Valor" title="Valor" name="Valor" value="<?php echo $linha["Valor"]; ?>">
-                    <input type="number" min="0" placeholder="Mensalidade" title="Mensalidade" title="Objetivo mensal" name="Mensalidade" value="<?php echo $linha["Mensalidade"]; ?>">
-                    <input type="date" title="Data Final" name="DataFinal" id="DataFinal" value="<?php echo $linha["DataFinal"]; ?>">
-                    <textarea placeholder="Descrição" title="Descrição" pattern=".{0,500}" name="Descricao" value="<?php echo $linha["Descricao"]; ?>"><?php echo $linha["Descricao"]; ?></textarea>
+                    <input type="text" placeholder="Nome da Conta" title="Nome" pattern=".{1,30}" name="Nome" value="<?php echo isset($linha["Nome"]) ? $linha["Nome"] : "Nome"; ?>" required>
+                    <input type="number" min="0" placeholder="Valor" title="Valor" name="Valor"
+                    value="<?php echo isset($linha["Valor"]) ? $linha["Valor"] : 0; ?>">
+                    <input type="number" min="0" placeholder="Mensalidade" title="Mensalidade" title="Objetivo mensal" name="Mensalidade"
+                    value="<?php echo isset($linha["Mensalidade"])? $linha["Mensalidade"] : 0; ?>">
+                    <input type="date" title="Data Final" name="DataFinal" id="DataFinal"
+                    value="<?php echo isset($linha["DataFinal"]) ? $linha["DataFinal"] :  date("Y-m-d"); ?>">
+                    <textarea placeholder="Descrição" title="Descrição" pattern=".{0,500}" name="Descricao" 
+                    value="<?php echo isset($linha["Descricao"]) ? $linha["Descricao"] : "Descrição"; ?>"><?php echo isset($linha["Descricao"]) ? $linha["Descricao"] : "Descrição"; ?>
+                </textarea>
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </form>
 
@@ -145,6 +170,7 @@ try {
 
     <?php } else {
         echo "<h2>Conta eliminada ou não tens acesso ou Inicia sessão!</h2>";
+        echo "<a href='../../../index.html'>Home</a>";
     }
     ?>
 

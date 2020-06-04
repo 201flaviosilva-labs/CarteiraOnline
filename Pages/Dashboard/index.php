@@ -57,9 +57,14 @@ try {
                     <a class="nav-item nav-link active" href="#">Dashboard</a>
                 </div>
                 <div class="navbar-nav">
-                    <!-- <a class="nav-item nav-link" href="./Pages/LogIn_Registro/index.php">Entrar/Registrar</a> -->
-                <?php if (isset($linhaUser["UserName"])) {?> 
-                    <a class="nav-item nav-link" href="../../Data/Registro/Sair.php"> <?php echo $linhaUser["UserName"]; ?> (Sair)</a>
+                    <?php if (isset($linhaUser["UserName"])) { ?> 
+                        <a class="nav-item nav-link" href="../../Data/Registro/Sair.php">
+                            <?php echo $linhaUser["UserName"]; ?> (Sair)
+                        </a>
+                        <?php } else { ?> 
+                            <a class="nav-item nav-link" href="../LogIn_Registro/index.php">
+                                Entrar/Registrar
+                            </a>
                 <?php } ?> 
                 </div>
             </div>
@@ -132,7 +137,8 @@ try {
             </div>
         </main>
     <?php } else {
-        echo "<h2>Tens de iniciar sessão!</h2>";
+        echo "<h2>Tens de iniciar sessão! <br> Ou Então aconteceu um erro!</h2>";
+        echo "<a href='../../../index.html'>Home</a>";
     }
     ?>
 

@@ -1,7 +1,6 @@
 <?PHP
 require "../Conexao.php";
 ?>
-
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -15,16 +14,11 @@ require "../Conexao.php";
 <body>
     <h1>A Resolver o pedido de Log In</h1>
     <?php
-    try {
-        $UserName = isset($_POST["UserName"]) ? $_POST["UserName"] : "Bug";
-        $PalavraPasse = isset($_POST["PalavraPasse"]) ? $_POST["PalavraPasse"] : "123";
-
+        $UserName = isset($_POST["UserName"]) ? $_POST["UserName"] : "";
+        $PalavraPasse = isset($_POST["PalavraPasse"]) ? $_POST["PalavraPasse"] : "";
         $sql = "SELECT * FROM Useres WHERE UserName='$UserName';"; // Query
         $result = $conn->query($sql);
-
         $resultadoImport = $result->fetch_assoc();
-        echo "<br/>";
-
         if (isset($resultadoImport["UserName"])) {
             if (password_verify("$PalavraPasse", $resultadoImport["PalavraPasse"])) {
                 $_SESSION["SessaoUserId"] = $resultadoImport["User_Id"];
@@ -36,9 +30,6 @@ require "../Conexao.php";
         } else {
             MensFunc("Erro no UserName ou na Palavra-Passe!");
         }
-    } catch (Exception $e) {
-        MensFunc("Algo Não Correu Como Experado ao Iniciar Sessão!");
-    }
 
     function MensFunc($mensagem, $IsErro = true)
     {
@@ -48,6 +39,7 @@ require "../Conexao.php";
         }
     }
     ?>
+    <a href="../../Pages/LogIn_Registro/index.php">Voltar</a>
 </body>
 
 </html>

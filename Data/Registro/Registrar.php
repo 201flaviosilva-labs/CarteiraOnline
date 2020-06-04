@@ -13,38 +13,33 @@ require "../Conexao.php";
 
 <body>
     <?php
-    try {
         $UserName =  isset($_POST["UserName"]) ? $_POST["UserName"] : "";
         $PalavraPasse = isset($_POST["PalavraPasse"]) ? $_POST["PalavraPasse"] : "";
-
+        if ($UserName == "" || $PalavraPasse == "") {
+            MensFunc("Os dados não estão corretos!");
+            die();
+        }
+        echo "<div><p>User name: $UserName </p></div>";
         if (isset($UserName)) {
             $sqlChek = "SELECT UserName FROM Useres WHERE UserName = '$UserName';";
             $result = $conn->query($sqlChek);
             $resultadoImport = $result->fetch_assoc();
-
             if (!isset($resultadoImport["UserName"])) {
-
                 $PalavraPasse = password_hash("$PalavraPasse", PASSWORD_DEFAULT);
-                echo "<br />";
-
                 $sql = "INSERT INTO Useres (UserName, PalavraPasse)
                         VALUES ('$UserName', '$PalavraPasse');";
-
                 if ($conn->query($sql) === TRUE) {
                     MensFunc("A tua conta foi criada!", false);
                 } else {
                     MensFunc("Algo Não Correu Como Experado ao Criar Conta!");
                 }
             } else {
-                MensFunc("Não podes usar esse Nome de Utilizador porque já existe!");
-                MensFunc("Os dados não estão corretos!");
+                MensFunc("Não podes usar esse Nome de Utilizador porque já existe!
+                <br> Os dados não estão corretos!");
             }
         }else {
             MensFunc("Os dados não estão corretos!");
         }
-    } catch (Exception $e) {
-        MensFunc("Algo Não Correu Como Experado ao Criar Conta!");
-    }
 
     function MensFunc($mensagem, $IsErro = true)
     {
@@ -54,6 +49,7 @@ require "../Conexao.php";
         }
     }
     ?>
+    <a href="../../Pages/LogIn_Registro/index.php">Voltar</a>
 </body>
 
 </html>
