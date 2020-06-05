@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -30,20 +29,132 @@
                 </div>
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="./Pages/LogIn_Registro/index.php">Entrar/Registrar</a>
-                    <!-- <a class="nav-item nav-link disabled" href="#">Sair</a> -->
                 </div>
             </div>
         </nav>
     </header>
+
     <main>
         <h2>Objetivo</h2>
-        <p>O objetivo deste site é ajudar a organizar a gestão de dinheiro e de tempo!</p>
-        <a href="./Pages/LogIn_Registro/index.php">Regsoahd</a>
-        <a href="./Pages/Dashboard/index.php">DashBoard</a>
-        <h2>Perguntas Mais Frequentes</h2>
+        <p>O objetivo deste site é ajudar a organizar o teu dinheiro! 🤑 (Aprender PHP)</p>
+
+        <h2>Perguntas Mais Frequentes ❔</h2>
+        <div class="grid" id="PerMaisFre">
+            <article>
+                <h3>O Site é Grátis? </h3>
+                <p>Sim, o site é totalmente gratuito de usar. 😁</p>
+            </article>
+            <article>
+                <h3>É seguro pôr as minhas contas aqui?</h3>
+                <p>Totalmente ninguém, irá conseguir ter acesso às tuas informações. 😉</p>
+            </article>
+            <article>
+                <h3>O que eu posso fazer neste site?</h3>
+                <p>Neste site podes criar as tuas contas e apontar os registos das mesmas. 👌</p>
+            </article>
+            <article>
+                <h3>Para que foi criado o site?</h3>
+                <p>O site foi um projeto em que o criador começou a trabalhar, pois estava a aprender uma nova
+                    tecnologia, por
+                    <a href="https://201flaviosilva.github.io/">mais exemplos</a> 🤓</p>
+            </article>
+        </div>
+
+        <h2>Ajudas e Dicas ✍️</h2>
+        <div class="grid" id="AjudasDicas">
+            <article>
+                <h3>Onde Gastar o dinheiro?</h3>
+                <p>Por exemplo pensa quanto tempo vai ser útil em relação ao valor e não há outras coisas parecidas mais
+                    baratas. 🤔</p>
+            </article>
+            <article>
+                <h3>Como poupar dinheiro?</h3>
+                <p>Ter um cofre de barro pode ajudar, onde só dá para por dinheiro e para tirar é preciso partir. 🐖</p>
+            </article>
+        </div>
+
+        <h2>Guia Turístico</h2>
+        <div id="RoadMap">
+            <h3>Criar Conta</h3>
+            <ol class="grid">
+                <li>
+                    <h4>Entrar no Registro</h4>
+                    <img src="./Assets/Img/Registro/Link.png" alt="Link">
+                </li>
+                <li>
+                    <h4>Visão Geral da Página</h4>
+                    <img src="./Assets/Img/Registro/Pagina.png" alt="Registro">
+                    <p>Se já tiveres conta então Entra no site</p>
+                </li>
+                <li>
+                    <h4>Criar um User</h4>
+                    <img src="./Assets/Img/Registro/Criar_Conta.png" alt="Criar Conta">
+                    <p>Escreve os dados mais corretos para ti!</p>
+                </li>
+                <li>
+                    <h4>User Criado</h4>
+                    <img src="./Assets/Img/Registro/Conta_Criada_MSG.png" alt="Criar User MGS">
+                    <p>Se tudo correu bem, verás esta mensagem para te relembrar do teu nome de utilizador único. Clica
+                        em voltar.</p>
+                </li>
+                <li>
+                    <h4>Faz Log In</h4>
+                    <img src="./Assets/Img/Registro/Entrar.png" alt="Entrar">
+                    <p>Entra com o teu nome de utilizador e a tua palavra passe.</p>
+                </li>
+            </ol>
+            <h3>DashBoard</h3>
+            <ol class="grid">
+                <li>
+                    <h4>Página DashBoard</h4>
+                    <img src="./Assets/Img/Dasboard/Pagina.png" alt="DashBoard">
+                </li>
+                <li>
+                    <h4>Criar Uma Conta</h4>
+                    <img src="./Assets/Img/Dasboard/CriarConta.png" alt="Criar uma Conta">
+                    <p>Para começar vamos criar uma conta</p>
+                </li>
+                <li>
+                    <h4>Criar Conta</h4>
+                    <img src="./Assets/Img/Dasboard/ContaCriada.png" alt="Conta Criada">
+                    <p>Se tudo correr bem verás esta mensagem, clica em voltar.</p>
+                </li>
+                <li>
+                    <h4>Lista das Contas</h4>
+                    <img src="./Assets/Img/Dasboard/ListaContas.png" alt="Criar Conta MGS">
+                    <p>Aqui podes ver todas as tuas contas ativas</p>
+                </li>
+            </ol>
+            <h3>Seleciona uma Conta</h3>
+            <ol class="grid">
+                <li>
+                    <h4>Página Da Conta</h4>
+                    <img src="./Assets/Img/Conta/Pagina.png" alt="Contas">
+                    <p>Aqui podes editar a tua conta e criar registros, vamos criar um :)</p>
+                </li>
+                <li>
+                    <h4>Criar Um Registro</h4>
+                    <img src="./Assets/Img/Conta/CriarRegistro.png" alt="Criar Registro">
+                    <p>No fundo da página tens 3 caixas de texto onde podes escrver o que for mais conveniente para ti.
+                    </p>
+                </li>
+                <li>
+                    <h4>Lista Registro</h4>
+                    <img src="./Assets/Img/Conta/ListaRegistros.png" alt="Lista Registros">
+                    <p>Se tudo correu bem o registro que acabaste de criar irá aparecer em baixo.</p>
+                </li>
+                <li>
+                    <h4>Tempo Estimado</h4>
+                    <img src="./Assets/Img/Conta/AtualizacaoTempo.png" alt="Tempo">
+                    <p>Agora já falta menos tempo para conseguires o teu objetivo.</p>
+                </li>
+            </ol>
+        </div>
+
     </main>
+
     <footer>
-        <p>Feito por <a href="https://201flaviosilva.github.io/">MeiaGaspea</a></p>
+        <p>Feito por <a href="https://201flaviosilva.github.io/">Flávio Silva</a></p>
     </footer>
 </body>
 

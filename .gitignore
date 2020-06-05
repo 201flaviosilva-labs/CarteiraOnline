@@ -2,3 +2,5 @@ node_modules/
 .DS_Store
 Le-me.Inportante
 test/test.php
+lembrar.md
+Data/Conexao.php

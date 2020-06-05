@@ -1,3 +1,46 @@
 body {
-    background: white;
+  background: white;
+}
+
+header,
+footer {
+  width: 100%;
+}
+
+footer {
+  text-align: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.grid {
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 10px;
+}
+
+main div {
+  margin: 10px 0;
+  border-bottom: 2px solid black;
+}
+
+#PerMaisFre,
+#RoadMap {
+  background-color: aqua;
+}
+
+#AjudasDicas {
+  background-color: snow;
+}
+
+#RoadMap h3 {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  text-shadow: 4px 4px blueviolet;
 }

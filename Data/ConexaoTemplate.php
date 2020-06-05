@@ -2,7 +2,7 @@
 session_start();
 $servername = "localhost";
 $username = "root";
-$password = "Beep";
+$password = "";
 $dbname = "CarteiraOnline";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
