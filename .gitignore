@@ -1,7 +1,8 @@
 node_modules/
 .DS_Store
-Le-me.Inportante
 test/test.php
 lembrar.md
-Data/SQL/CarteiraOnline.sql
 Data/Conexao.php
+SQL/CarteiraOnline.sql
+Build/Carteira Online.zip
+Build/CarteiraOnline.zip

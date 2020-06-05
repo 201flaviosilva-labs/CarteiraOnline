@@ -17,8 +17,8 @@ try {
             ON Contas.User_Id = Useres.User_Id
             WHERE Useres.User_Id = $User_Id";
         $resultContas = $conn->query($sql);
-    
-    
+
+
         $sqlRegistro = "SELECT `ContaNome`, `Nome`,`Montante`,`Data`
                     FROM Registros
                     WHERE `User_Id` = $User_Id";
@@ -57,15 +57,15 @@ try {
                     <a class="nav-item nav-link active" href="#">Dashboard</a>
                 </div>
                 <div class="navbar-nav">
-                    <?php if (isset($linhaUser["UserName"])) { ?> 
+                    <?php if (isset($linhaUser["UserName"])) { ?>
                         <a class="nav-item nav-link" href="../../Data/Registro/Sair.php">
                             <?php echo $linhaUser["UserName"]; ?> (Sair)
                         </a>
-                        <?php } else { ?> 
-                            <a class="nav-item nav-link" href="../LogIn_Registro/index.php">
-                                Entrar/Registrar
-                            </a>
-                <?php } ?> 
+                    <?php } else { ?>
+                        <a class="nav-item nav-link" href="../LogIn_Registro/index.php">
+                            Entrar/Registrar
+                        </a>
+                    <?php } ?>
                 </div>
             </div>
         </nav>

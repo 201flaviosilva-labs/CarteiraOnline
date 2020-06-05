@@ -56,16 +56,21 @@ try {
     if ($User_Id > 0 && $numLinhasContas > 0) { ?>
 
         <header class="w-100 text-center align-middle">
-            <h1><?php echo isset($linha["Nome"])?$linha["Nome"]:"Nome"; ?></h1>
-            <p>Balanço: <b><?php echo isset($linha["Balanco"]) . "/" . isset($linha["Valor"]) ? $linha["Valor"] : 0; ?></b></p>
+            <h1><?php echo isset($linha["Nome"]) ? $linha["Nome"] : "Nome"; ?></h1>
+            <p>Balanço:
+                <b>
+                    <?php echo (isset($linha["Balanco"]) ? $linha["Balanco"] : 0); ?>/
+                    <?php echo isset($linha["Valor"]) ? $linha["Valor"] : 0; ?>
+                </b>
+            </p>
             <p>Tempo Estimado: <b>
-                <?php
-                    $valorUser = isset($linha["Valor"])?$linha["Valor"]:0;
-                    $BalancoUser = isset($linha["Balanco"])?$linha["Balanco"]:0;
-                    $MensalidadeUser = isset($linha["Mensalidade"])?$linha["Mensalidade"]:1;
-                echo ($valorUser-$BalancoUser)/$MensalidadeUser;
-                ?>
-            </b> M.</p>
+                    <?php
+                    $valorUser = isset($linha["Valor"]) ? $linha["Valor"] : 0;
+                    $BalancoUser = isset($linha["Balanco"]) ? $linha["Balanco"] : 0;
+                    $MensalidadeUser = isset($linha["Mensalidade"]) ? $linha["Mensalidade"] : 1;
+                    echo ($valorUser - $BalancoUser) / $MensalidadeUser;
+                    ?>
+                </b> M.</p>
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <a class="navbar-brand" href="../../../index.html">Carteira Online</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,15 +82,15 @@ try {
                         <a class="nav-item nav-link" href="../index.php">Dashboard</a>
                     </div>
                     <div class="navbar-nav">
-                        <!-- <a class="nav-item nav-link" href="./Pages/LogIn_Registro/index.php">Entrar/Registrar</a> -->
-                        <?php if (isset($linhaUser["UserName"])) { ?> 
+                        <?php if (isset($linhaUser["UserName"])) { ?>
                             <a class="nav-item nav-link" href="../../../Data/Registro/Sair.php">
-                            <?php echo isset($linhaUser["UserName"]); ?> (Sair)</a>
-                        <?php } else { ?> 
+                                <?php echo $linhaUser["UserName"]; ?> (Sair)
+                            </a>
+                        <?php } else { ?>
                             <a class="nav-item nav-link" href="../../LogIn_Registro/index.php">
                                 Entrar/Registrar
                             </a>
-                        <?php } ?> 
+                        <?php } ?>
                     </div>
                 </div>
             </nav>
@@ -106,14 +111,10 @@ try {
 
                 <form class="formEditarConta shadow-lg p-3 mb-5 bg-white rounded" action="../../../Data/Contas/Editar.php" method="GET">
                     <input type="text" placeholder="Nome da Conta" title="Nome" pattern=".{1,30}" name="Nome" value="<?php echo isset($linha["Nome"]) ? $linha["Nome"] : "Nome"; ?>" required>
-                    <input type="number" min="0" placeholder="Valor" title="Valor" name="Valor"
-                    value="<?php echo isset($linha["Valor"]) ? $linha["Valor"] : 0; ?>">
-                    <input type="number" min="0" placeholder="Mensalidade" title="Mensalidade" title="Objetivo mensal" name="Mensalidade"
-                    value="<?php echo isset($linha["Mensalidade"])? $linha["Mensalidade"] : 0; ?>">
-                    <input type="date" title="Data Final" name="DataFinal" id="DataFinal"
-                    value="<?php echo isset($linha["DataFinal"]) ? $linha["DataFinal"] :  date("Y-m-d"); ?>">
-                    <textarea placeholder="Descrição" title="Descrição" pattern=".{0,500}" name="Descricao" 
-                    value="<?php echo isset($linha["Descricao"]) ? $linha["Descricao"] : "Descrição"; ?>"><?php echo isset($linha["Descricao"]) ? $linha["Descricao"] : "Descrição"; ?>
+                    <input type="number" min="0" placeholder="Valor" title="Valor" name="Valor" value="<?php echo isset($linha["Valor"]) ? $linha["Valor"] : 0; ?>">
+                    <input type="number" min="0" placeholder="Mensalidade" title="Mensalidade" title="Objetivo mensal" name="Mensalidade" value="<?php echo isset($linha["Mensalidade"]) ? $linha["Mensalidade"] : 0; ?>">
+                    <input type="date" title="Data Final" name="DataFinal" id="DataFinal" value="<?php echo isset($linha["DataFinal"]) ? $linha["DataFinal"] :  date("Y-m-d"); ?>">
+                    <textarea placeholder="Descrição" title="Descrição" pattern=".{0,500}" name="Descricao" value="<?php echo isset($linha["Descricao"]) ? $linha["Descricao"] : "Descrição"; ?>"><?php echo isset($linha["Descricao"]) ? $linha["Descricao"] : "Descrição"; ?>
                 </textarea>
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </form>
@@ -179,7 +180,14 @@ try {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.13/js/dataTables.bootstrap4.min.js"></script>
 
-    <script src="./script"></script>
+    <script>
+        $(document).ready(function() {
+            $("#TabelaContas").DataTable();
+        });
+
+        const d = new Date();
+        document.getElementById("DataRegistro").value = `${String(new Date().toISOString().slice(0, 10))}`;
+    </script>
 </body>
 
 </html>
