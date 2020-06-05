@@ -3,5 +3,5 @@ node_modules/
 Le-me.Inportante
 test/test.php
 lembrar.md
-Conexao.php
 Data/SQL/CarteiraOnline.sql
+Data/Conexao.php
