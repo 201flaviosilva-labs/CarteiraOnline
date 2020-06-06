@@ -14,6 +14,6 @@ O objetivo deste site foi desenvolver um projeto onde se utiliza linguagem de pr
 - [Site](http://carteiraonline.epizy.com/)
 - [Repositório](https://github.com/201flaviosilva/CarteiraOnline)
 - [Organização Projeto](https://github.com/201flaviosilva/CarteiraOnline/projects)
-- [Mais Informações](https://github.com/201flaviosilva/CarteiraOnline/projects)
+- [Mais Informações](https://github.com/201flaviosilva/CarteiraOnline/blob/master/Info.md)
 
 <!-- [Como por um site em php online](https://webappcreator.in/how-to-host-php-website-for-free/) -->
