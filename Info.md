@@ -36,6 +36,7 @@ Com este projeto eu também queria conhecer um pouco melhor esta Framework de CS
 | [PHPMyAdmin](https://www.phpmyadmin.net/)            |          Para simplificar as Querys de SQL          |
 | [DataTables](https://datatables.net/)                | Utilizado nas Tabelas, organizar, paginação, etc... |
 | [Infinity Free](https://infinityfree.net/)           |                   Publicar o site                   |
+| [Feather Icons](https://feathericons.com/)           |                    Alguns Icons                     |
 | [MarkDown](https://www.markdownguide.org/)           |           Relatórios, Descrições, etc...            |
 
 ---
